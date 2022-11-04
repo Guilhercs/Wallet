@@ -10,42 +10,47 @@ Chart.register(...registerables);
   styleUrls: ['./dashboard.component.scss'],
 })
 export class DashboardComponent implements OnInit {
-  indices = [1, 2, 3, 4, 5, 6 ,7 ,8 ,9];
-  stock_prices = [1, 2, 3, 4, 5, 6 ,7 ,8 ,9];
-  usable!: any[];
-  date!: any[]
+  indices!: any;
+  stockPrices!: any[];
+  objectData!: any;
+  date: any;
   constructor(private alpha: AlphaVantageService) {}
   dataLabel!: any;
   dataSet: any;
 
   ngOnInit(): void {
-    this.RenderChart(this.indices, this.stock_prices);
+    this.getPrices();
+    // getCompanyOverview() {
+    //   let overview = this.alpha.getData().pipe(shareReplay());
+    //   overview.subscribe((data) => {
+    //     this.dataLabel = data['Description'];
+    //     console.log(this.dataLabel);
+
+    //   });
   }
+  getPrices() {
+    let historyDaily = this.alpha.getSeries().pipe(shareReplay());
+    historyDaily.subscribe((data) => {
+      this.indices = data['Time Series (Daily)'];
+      console.log(this.indices);
+      let dates = Object.values(this.indices);
+      console.log(dates);
+      dates.forEach((element: any) => {
+        element[0]
+        console.log(element);
 
-  // getCompanyOverview() {
-  //   let overview = this.alpha.getData().pipe(shareReplay());
-  //   overview.subscribe((data) => {
-  //     this.dataLabel = data['Description'];
-  //     console.log(this.dataLabel);
-
-  //   });
-  // }
-
-  // getPrices() {
-  //   this.indices = [];
-  //   this.stock_prices = [];
-  //   let resp = this.alpha.getSeries().pipe(shareReplay());
-  //   resp.subscribe((data) => {
-  //     this.usable = data['Time Series (Daily)'];
-  //     var dates = Object.keys(this.usable);
-  //     for (let i = 0; i < 1000 && i < dates.length; i++) {
-  //       this.indices.push(dates[i]);
-  //       this.stock_prices.push(this.usable[dates[i]]['4. close']);
-  //
-
-  //     }
-  //   });
-  // }
+      });
+      // for(let i = 0; i<dates.length; i++){
+      //   this.indices.push(dates[i]);
+      //   console.log(this.indices[i]);
+      // }
+      // console.log(this.indices, this.stockPrices);
+      // this.indices.forEach((res: any) => {
+      //   this.stockPrices.push(res['4. close'])
+      //   console.log(this.stockPrices);
+      // });
+      })
+  }
 
   RenderChart(indices: any, stockPrices: any) {
     const myChart = new Chart('piechart', {
@@ -54,7 +59,7 @@ export class DashboardComponent implements OnInit {
         labels: indices,
         datasets: [
           {
-            label: '# of Votes',
+            label: 'Valor de fechamento',
             data: stockPrices,
             backgroundColor: [
               'rgba(255, 99, 132, 0.2)',
@@ -84,6 +89,6 @@ export class DashboardComponent implements OnInit {
         },
       },
     });
-    return myChart
+    return myChart;
   }
 }
