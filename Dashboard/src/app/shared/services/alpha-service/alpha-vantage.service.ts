@@ -8,21 +8,22 @@ import { map, Observable, tap } from 'rxjs';
 export class AlphaVantageService {
   constructor(private http: HttpClient) {}
 
-  symbol = 'ITSA4.SA';
   apiKey = 'VQGI1R310X8XHD7G';
-  OVERVIEW = `https://www.alphavantage.co/query?function=OVERVIEW&symbol=PBR&apikey=${this.apiKey}`;
-  TIME_SERIES_DAILY = `https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=${this.symbol}&apikey=${this.apiKey}`
+  OVERVIEW = `https://www.alphavantage.co/query?function=OVERVIEW`;
+  TIME_SERIES_DAILY = `https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=ITSA4.SA&apikey=${this.apiKey}`
 
-  getData(): Observable<any> {
-    return this.http.get<any>(`${this.OVERVIEW}`).pipe(
+  getData(symbol: string): Observable<any> {
+    symbol = 'PBR'
+    return this.http.get<any>(`${this.OVERVIEW}&symbol=${symbol}&apikey=${this.apiKey}`).pipe(
       tap((res: any) => {
         console.log(res);
       })
     )
   }
 
-  getSeries(): Observable<any> {
-    return this.http.get<any>(`${this.TIME_SERIES_DAILY}`).pipe(
+  getSeries(symbol: string): Observable<any> {
+    symbol = 'ITSA4.SA'
+    return this.http.get<any>(`${this.TIME_SERIES_DAILY}&symbol=${symbol}&apikey=${this.apiKey}`).pipe(
       tap((res: any) => {
         console.log(res);
       })
