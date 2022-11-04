@@ -1,7 +1,7 @@
-import { AlphaVantageService } from './alpha-vantage.service';
+import { AlphaVantageService } from './../shared/services/alpha-service/alpha-vantage.service';
 import { Component, OnInit } from '@angular/core';
 import { Chart, registerables } from 'node_modules/chart.js';
-import { map, Observable, shareReplay } from 'rxjs';
+import { shareReplay } from 'rxjs';
 
 Chart.register(...registerables);
 @Component({
@@ -10,56 +10,54 @@ Chart.register(...registerables);
   styleUrls: ['./dashboard.component.scss'],
 })
 export class DashboardComponent implements OnInit {
-  indices!: any;
-  stockPrices!: any[];
-  objectData!: any;
-  date: any;
+  indices: any;
+  stockPrices: any;
+  usable!: any[];
+  date!: any;
+  symbol = 'ITSA4';
+  symbolName = 'ITSA4';
+
   constructor(private alpha: AlphaVantageService) {}
   dataLabel!: any;
   dataSet: any;
 
   ngOnInit(): void {
-    this.getPrices();
-    // getCompanyOverview() {
-    //   let overview = this.alpha.getData().pipe(shareReplay());
-    //   overview.subscribe((data) => {
-    //     this.dataLabel = data['Description'];
-    //     console.log(this.dataLabel);
-
-    //   });
+    this.getPrices(this.symbol);
   }
-  getPrices() {
-    let historyDaily = this.alpha.getSeries().pipe(shareReplay());
-    historyDaily.subscribe((data) => {
-      this.indices = data['Time Series (Daily)'];
-      console.log(this.indices);
-      let dates = Object.values(this.indices);
-      console.log(dates);
-      dates.forEach((element: any) => {
-        element[0]
-        console.log(element);
 
+  // getCompanyOverview() {
+  //   let overview = this.alpha.getData().pipe(shareReplay());
+  //   overview.subscribe((data) => {
+  //     this.dataLabel = data['Description'];
+  //     console.log(this.dataLabel);
+
+  //   });
+  // }
+
+  getPrices(symbol:string) {
+    let resp = this.alpha.getSeries(symbol).pipe(shareReplay());
+    resp.subscribe((data) => {
+    let dados = data["Time Series (Daily)"];
+    let priceArray: number[] = Array(dados);
+    let dateArray: string[] = Object.keys(dados).reverse()
+    this.dataSet = dateArray
+    priceArray.forEach((element: any) => {
+      let price: any = Object.values(element).map((res: any) => (res['4. close'])
+      )
+      this.stockPrices = price.reverse();
+    });
+    this.RenderChart(this.dataSet, this.stockPrices, this.symbolName)
       });
-      // for(let i = 0; i<dates.length; i++){
-      //   this.indices.push(dates[i]);
-      //   console.log(this.indices[i]);
-      // }
-      // console.log(this.indices, this.stockPrices);
-      // this.indices.forEach((res: any) => {
-      //   this.stockPrices.push(res['4. close'])
-      //   console.log(this.stockPrices);
-      // });
-      })
   }
 
-  RenderChart(indices: any, stockPrices: any) {
+  RenderChart(indices: any, stockPrices: any, symbol? : string) {
     const myChart = new Chart('piechart', {
       type: 'line',
       data: {
         labels: indices,
         datasets: [
           {
-            label: 'Valor de fechamento',
+            label: `Valor da ${symbol}`,
             data: stockPrices,
             backgroundColor: [
               'rgba(255, 99, 132, 0.2)',
@@ -89,6 +87,6 @@ export class DashboardComponent implements OnInit {
         },
       },
     });
-    return myChart;
+    return myChart
   }
 }
