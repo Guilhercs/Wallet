@@ -1,4 +1,4 @@
-import { AlphaVantageService } from './../shared/services/alpha-service/alpha-vantage.service';
+import { AlphaVantageService } from '../shared/services/alpha-vantage.service';
 import { Component, OnInit } from '@angular/core';
 import { Chart, registerables } from 'node_modules/chart.js';
 import { shareReplay } from 'rxjs';

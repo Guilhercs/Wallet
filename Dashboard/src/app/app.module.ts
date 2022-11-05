@@ -8,6 +8,7 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule } from '@angular/forms';
 import { NavComponent } from './template/nav/nav.component';
+import { DatePipe } from './shared/pipe/date.pipe';
 
 
 @NgModule({
@@ -15,6 +16,7 @@ import { NavComponent } from './template/nav/nav.component';
     AppComponent,
     DashboardComponent,
     NavComponent,
+    DatePipe,
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   imports: [
