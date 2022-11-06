@@ -101,6 +101,6 @@ export class DashboardComponent implements OnInit {
         },
       },
     });
-    return myChart;
+    return myChart
   }
 }
