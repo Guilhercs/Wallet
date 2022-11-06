@@ -9,6 +9,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule } from '@angular/forms';
 import { NavComponent } from './template/nav/nav.component';
 import { DatePipe } from './shared/pipe/date.pipe';
+import {MatCardModule} from '@angular/material/card'
 
 
 @NgModule({
@@ -25,9 +26,10 @@ import { DatePipe } from './shared/pipe/date.pipe';
     HttpClientModule,
     BrowserAnimationsModule,
     FormsModule,
+    MatCardModule,
 
   ],
-  providers: [],
+  providers: [DatePipe],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -1,18 +1,29 @@
-<mat-form-field [symbolName]="name">
-  
-  <input #name >
-  
-</mat-form-field>
-
-
 <div>
-  <h2>Price Chart</h2>
-  <div class="grafico" >
-    <canvas id="piechart">
-    </canvas>
-  </div>
+  <label>Buscar: </label>
+  <input
+    mat-input
+    class="inputs"
+    id="find"
+    placeholder="TAEE4"
+    type="text"
+    [(ngModel)]="symbol"
+    name="symbol"
+  />
+  <button
+    mat-flat-button
+    class="search"
+    type="button"
+    (click)="getPrices(symbol)"
+  >
+    Inserir
+  </button>
 </div>
 
-<div *ngIf="dataLabel">
-  {{dataLabel}}
-</div>
+<h2>Price Chart</h2>
+<mat-card class="card-grafico">
+  <canvas id="piechart"> </canvas>
+</mat-card>
+<mat-card>
+  <p *ngIf="altaSemana">Alta em 52 semanas {{ altaSemana }}</p>
+  <p *ngIf="baixaSemana">Baixa em 52 semanas {{ baixaSemana }}</p>
+</mat-card>

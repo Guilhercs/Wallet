@@ -14,18 +14,13 @@ export class AlphaVantageService {
 
   getData(symbol: string): Observable<any> {
     symbol = 'PBR'
-    return this.http.get<any>(`${this.OVERVIEW}&symbol=${symbol}&apikey=${this.apiKey}`).pipe(
-      tap((res: any) => {
-        console.log(res);
-      })
-    )
+    return this.http.get<any>(`${this.OVERVIEW}&symbol=${symbol}&apikey=${this.apiKey}`)
   }
 
   getSeries(symbol: string): Observable<any> {
-    symbol = 'ITSA4.SA'
+    symbol = 'PETR3.SA'
     return this.http.get<any>(`${this.TIME_SERIES_DAILY}&symbol=${symbol}&apikey=${this.apiKey}`).pipe(
       tap((res: any) => {
-        console.log(res);
       })
     )
   }
