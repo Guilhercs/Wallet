@@ -15,10 +15,11 @@ export class DashboardComponent implements OnInit {
   stockPrices: any;
   usable!: any[];
   date!: any;
-  symbol = 'ITSA4';
-  symbolName = 'ITSA4';
-  altaSemana: any;
-  baixaSemana: any;
+  symbol = 'PETR4';
+  symbolName!: string;
+  altaSemana!: string;
+  baixaSemana!: string;
+  descricao!: string;
 
   constructor(
     private alpha: AlphaVantageService,
@@ -32,16 +33,19 @@ export class DashboardComponent implements OnInit {
   }
 
   updateData() {
-    this.getPrices(this.symbol);
     this.getCompanyOverview(this.symbol);
+    this.getPrices(this.symbol);
   }
 
   getCompanyOverview(symbol: string) {
     let overview = this.alpha.getData(symbol).pipe(shareReplay());
     overview.subscribe((data) => {
       console.log(data);
+      this.descricao = data['Description'];
       this.altaSemana = data['52WeekHigh'];
       this.baixaSemana = data['52WeekLow'];
+      this.symbolName = data['Symbol'];
+
     });
   }
 

@@ -1,7 +1,23 @@
-.card-grafico{
-  #piechart{
-    width: 800px;
-    height: 300px;
-    margin: 24px;
+.search{
+  margin: 24px;
+  button{
+    background-color: goldenrod;
+    border-radius: 0px 9px 9px 0px;
   }
+  input{
+    padding: 9px;
+    border-radius: 9px 0px 0px 9px;
+  }
+}
+
+.descricao{
+  margin: 24px 20px 20px 24px
+}
+
+.card-grafico {
+  margin: 24px 20px 20px 24px
+}
+
+.info{
+  margin: 24px 20px 20px 24px
 }

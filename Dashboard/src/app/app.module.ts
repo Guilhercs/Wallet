@@ -9,17 +9,13 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule } from '@angular/forms';
 import { NavComponent } from './template/nav/nav.component';
 import { DatePipe } from './shared/pipe/date.pipe';
-import {MatCardModule} from '@angular/material/card'
-
-
+import { MatCardModule } from '@angular/material/card';
+import {MatSidenavModule} from '@angular/material/sidenav';
+import {MatIconModule} from '@angular/material/icon';
+import { MatToolbarModule } from "@angular/material/toolbar";
+import {MatButtonModule} from '@angular/material/button';
 @NgModule({
-  declarations: [
-    AppComponent,
-    DashboardComponent,
-    NavComponent,
-    DatePipe,
-  ],
-  schemas: [CUSTOM_ELEMENTS_SCHEMA],
+  declarations: [AppComponent, DashboardComponent, NavComponent, DatePipe],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -27,9 +23,13 @@ import {MatCardModule} from '@angular/material/card'
     BrowserAnimationsModule,
     FormsModule,
     MatCardModule,
-
+    MatSidenavModule,
+    MatIconModule,
+    MatToolbarModule,
+    MatButtonModule,
   ],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
   providers: [DatePipe],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}
