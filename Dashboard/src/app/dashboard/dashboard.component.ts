@@ -11,47 +11,45 @@ Chart.register(...registerables);
   styleUrls: ['./dashboard.component.scss'],
 })
 export class DashboardComponent implements OnInit {
-  indices: any;
-  stockPrices: any;
-  usable!: any[];
-  date!: any;
-  symbol = 'PETR4';
-  symbolName!: string;
+  stockPrices!: number[];
+  dataSet!: string[];
+  symbolName: string = 'JPM';
   altaSemana!: string;
   baixaSemana!: string;
   descricao!: string;
+  name!: string;
 
   constructor(
     private alpha: AlphaVantageService,
     private datetransform: DatePipe
   ) {}
-  dataLabel!: any;
-  dataSet: any;
 
   ngOnInit(): void {
     this.updateData();
   }
 
   updateData() {
-    this.getCompanyOverview(this.symbol);
-    this.getPrices(this.symbol);
+    this.getCompanyOverview();
+    this.getPrices();
   }
 
-  getCompanyOverview(symbol: string) {
-    let overview = this.alpha.getData(symbol).pipe(shareReplay());
+  getCompanyOverview() {
+    let overview = this.alpha.getData(this.symbolName).pipe(shareReplay());
     overview.subscribe((data) => {
       console.log(data);
       this.descricao = data['Description'];
       this.altaSemana = data['52WeekHigh'];
       this.baixaSemana = data['52WeekLow'];
       this.symbolName = data['Symbol'];
+      this.name = data['Name'];
 
     });
   }
 
-  getPrices(symbol: string) {
-    const response = this.alpha.getSeries(symbol).pipe(shareReplay());
+  getPrices() {
+    const response = this.alpha.getSeries(this.symbolName).pipe(shareReplay());
     response.subscribe((data) => {
+      console.log(data);
       let dados = data['Time Series (Daily)'];
       let dateArray: string[] = Object.keys(dados).reverse();
       this.dataSet = dateArray;

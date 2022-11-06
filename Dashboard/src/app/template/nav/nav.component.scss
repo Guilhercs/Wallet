@@ -1,13 +1,21 @@
 .container {
   height: 100%;
   color: white;
-  background-color: rgb(107, 46, 115);
+  background: rgb(44, 114, 186);
+  background: linear-gradient(
+    0deg,
+    rgba(214, 0, 255, 1) 0%,
+    rgba(111, 31, 208, 0.9724264705882353) 50%,
+    rgba(44, 114, 186, 1) 100%
+  );
 }
 .menu {
   background-color: #3f51b5;
+  color: white;
+
 }
 .sidenav {
-  width: 15%;
+  width: 20%;
   background-color: #3f51b5;
 }
 

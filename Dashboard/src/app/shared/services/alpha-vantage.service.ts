@@ -7,21 +7,17 @@ import { Observable, tap } from 'rxjs';
 })
 export class AlphaVantageService {
   constructor(private http: HttpClient) {}
-
-  apiKey = 'VQGI1R310X8XHD7G';
+  // 60JY37XTRGIVVERU
+  //VQGI1R310X8XHD7G
+  apiKey = '60JY37XTRGIVVERU';
   OVERVIEW = `https://www.alphavantage.co/query?function=OVERVIEW`;
-  TIME_SERIES_DAILY = `https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=ITSA4.SA&apikey=${this.apiKey}`
+  TIME_SERIES_DAILY = `https://www.alphavantage.co/query?function=TIME_SERIES_DAILY`
 
   getData(symbol: string): Observable<any> {
-    symbol = 'PBR'
     return this.http.get<any>(`${this.OVERVIEW}&symbol=${symbol}&apikey=${this.apiKey}`)
   }
 
   getSeries(symbol: string): Observable<any> {
-    symbol = 'PETR3.SA'
-    return this.http.get<any>(`${this.TIME_SERIES_DAILY}&symbol=${symbol}&apikey=${this.apiKey}`).pipe(
-      tap((res: any) => {
-      })
-    )
+    return this.http.get<any>(`${this.TIME_SERIES_DAILY}&symbol=${symbol}&apikey=${this.apiKey}`)
   }
 }
