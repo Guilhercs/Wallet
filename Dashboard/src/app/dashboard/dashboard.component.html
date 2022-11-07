@@ -2,7 +2,7 @@
   <div class="search">
     <label>Buscar: </label>
     <mat-input-container>
-      <input matInput type="text" placeholder="PETR4" [(ngModel)]="symbolName" />
+      <input matInput type="text" placeholder="JPM" [(ngModel)]="symbolName" />
       <button
         mat-button
         type="button"
@@ -18,7 +18,7 @@
   <h3 class="symbol" *ngIf="symbolName">{{symbolName}}</h3>
   <p *ngIf="name">{{name}}</p>
   <mat-card>
-    <canvas id="piechart"> </canvas>
+    <canvas id="lineChart"> </canvas>
   </mat-card>
 </div>
 <div class="cards">

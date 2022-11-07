@@ -18,7 +18,7 @@ export class DashboardComponent implements OnInit {
   baixaSemana!: string;
   descricao!: string;
   name!: string;
-  myChart: any;
+  myChart!: Chart;
   constructor(
     private alpha: AlphaVantageService,
     private datetransform: DatePipe
@@ -43,7 +43,6 @@ export class DashboardComponent implements OnInit {
   getCompanyOverview() {
     let overview = this.alpha.getData(this.symbolName).pipe(shareReplay());
     overview.subscribe((data) => {
-      console.log(data);
       this.descricao = data['Description'];
       this.altaSemana = data['52WeekHigh'];
       this.baixaSemana = data['52WeekLow'];
@@ -56,7 +55,6 @@ export class DashboardComponent implements OnInit {
   getPrices() {
     const response = this.alpha.getSeries(this.symbolName).pipe(shareReplay());
     response.subscribe((data) => {
-      console.log(data);
       let dados = data['Time Series (Daily)'];
       let dateArray: string[] = Object.keys(dados).reverse();
       this.dataSet = dateArray;
@@ -67,12 +65,12 @@ export class DashboardComponent implements OnInit {
         );
         this.stockPrices = price.reverse();
       });
-      this.RenderChart(this.dataSet, this.stockPrices, this.symbolName);
+      this.renderChart(this.dataSet, this.stockPrices, this.symbolName);
     });
   }
 
-  RenderChart(dataSet: any, stockPrices: any, symbol?: string) {
-    this.myChart = new Chart('piechart', {
+  renderChart(dataSet: any, stockPrices: any, symbol?: string) {
+    this.myChart = new Chart('lineChart', {
       type: 'line',
       data: {
         labels: dataSet,

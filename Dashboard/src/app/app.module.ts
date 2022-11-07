@@ -14,8 +14,11 @@ import {MatSidenavModule} from '@angular/material/sidenav';
 import {MatIconModule} from '@angular/material/icon';
 import { MatToolbarModule } from "@angular/material/toolbar";
 import {MatButtonModule} from '@angular/material/button';
+import { CarteiraComponent } from './carteira/carteira.component';
+import { MatListModule } from '@angular/material/list';
+import {MatGridListModule} from '@angular/material/grid-list';
 @NgModule({
-  declarations: [AppComponent, DashboardComponent, NavComponent, DatePipe],
+  declarations: [AppComponent, DashboardComponent, NavComponent, DatePipe, CarteiraComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -27,6 +30,8 @@ import {MatButtonModule} from '@angular/material/button';
     MatIconModule,
     MatToolbarModule,
     MatButtonModule,
+    MatListModule,
+    MatGridListModule,
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   providers: [DatePipe],

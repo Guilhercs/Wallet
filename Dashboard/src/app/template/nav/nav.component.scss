@@ -12,6 +12,9 @@
 .menu {
   background-color: #3f51b5;
   color: white;
+  a{
+    color: white;
+  }
 
 }
 .sidenav {
@@ -33,3 +36,9 @@
     width: 50%;
   }
 }
+@media screen and (max-width: 2000px) {
+  .sidenav {
+    width: 15%;
+  }
+}
+
