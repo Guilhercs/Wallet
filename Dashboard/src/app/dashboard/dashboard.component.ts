@@ -18,19 +18,26 @@ export class DashboardComponent implements OnInit {
   baixaSemana!: string;
   descricao!: string;
   name!: string;
-
+  myChart: any;
   constructor(
     private alpha: AlphaVantageService,
     private datetransform: DatePipe
   ) {}
 
   ngOnInit(): void {
-    this.updateData();
+   this.updateData()
   }
 
   updateData() {
     this.getCompanyOverview();
     this.getPrices();
+    this.updateChart();
+  }
+
+  updateChart(){
+    if(this.myChart != undefined){
+      this.myChart.destroy()
+    }
   }
 
   getCompanyOverview() {
@@ -65,7 +72,7 @@ export class DashboardComponent implements OnInit {
   }
 
   RenderChart(dataSet: any, stockPrices: any, symbol?: string) {
-    const myChart = new Chart('piechart', {
+    this.myChart = new Chart('piechart', {
       type: 'line',
       data: {
         labels: dataSet,
@@ -101,6 +108,6 @@ export class DashboardComponent implements OnInit {
         },
       },
     });
-    return myChart
+    return this.myChart
   }
 }
