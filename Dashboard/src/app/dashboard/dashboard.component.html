@@ -3,27 +3,49 @@
     <label>Buscar: </label>
     <mat-input-container>
       <input matInput type="text" placeholder="JPM" [(ngModel)]="symbolName" />
-      <button
-        mat-button
-        type="button"
-        (click)="updateData()"
-      >
-        Inserir
-      </button>
+      <button mat-button type="submit" (click)="updateData()">Inserir</button>
     </mat-input-container>
   </div>
 </div>
+<div class="exchange">
+  <mat-input-container>
+    <input
+      class="converter"
+      matInput
+      type="text"
+      placeholder="USD"
+      [(ngModel)]="dol"
+    />
+    to
+    <input
+      class="converter"
+      matInput
+      type="text"
+      placeholder="BRL"
+      [(ngModel)]="brl"
+    />
+    <button mat-button type="button" (click)="converter()">Converter</button>
+    <p class="result" *ngIf="result">{{ result }}</p>
+  </mat-input-container>
+</div>
 <div class="cards">
-  <h2 class="title">Histórico de preços</h2>
-  <h3 class="symbol" *ngIf="symbolName">{{symbolName}}</h3>
-  <p *ngIf="name">{{name}}</p>
+  <div>
+    <h2 class="title">Histórico de preços</h2>
+    <h3 class="symbol" *ngIf="symbolName">{{ symbolName }}</h3>
+    <p *ngIf="name">{{ name }}</p>
+  </div>
+  <div class="buttom">
+    <button mat-raised-button (click)="getPrices('')">7D</button>
+    <button mat-raised-button (click)="getPrices('30')">1M</button>
+    <button mat-raised-button (click)="getPrices('90')">3M</button>
+  </div>
   <mat-card>
     <canvas id="lineChart"> </canvas>
   </mat-card>
 </div>
 <div class="cards">
   <mat-card>
-    <p *ngIf="descricao">{{descricao}}</p>
+    <p *ngIf="descricao">{{ descricao }}</p>
   </mat-card>
 </div>
 <div class="cards">

@@ -2,7 +2,7 @@ import { DatePipe } from './../shared/pipe/date.pipe';
 import { AlphaVantageService } from '../shared/services/alpha-vantage.service';
 import { Component, OnInit } from '@angular/core';
 import { Chart, registerables } from 'node_modules/chart.js';
-import { shareReplay } from 'rxjs';
+import { shareReplay, tap } from 'rxjs';
 
 Chart.register(...registerables);
 @Component({
@@ -12,31 +12,45 @@ Chart.register(...registerables);
 })
 export class DashboardComponent implements OnInit {
   stockPrices!: number[];
-  dataSet!: string[];
+  dataSet: string[] = [];
   symbolName: string = 'JPM';
   altaSemana!: string;
   baixaSemana!: string;
   descricao!: string;
   name!: string;
   myChart!: Chart;
+  dol: string = 'USD';
+  brl: string = 'BRL';
+  result!: string;
+  tempo!: string;
   constructor(
     private alpha: AlphaVantageService,
     private datetransform: DatePipe
   ) {}
 
   ngOnInit(): void {
-   this.updateData()
+    this.updateData();
+  }
+
+  converter() {
+    const conversor = this.alpha.getExchange(this.dol, this.brl);
+    conversor.subscribe((res: any) => {
+      console.log(res);
+      this.result = res['Realtime Currency Exchange Rate']['8. Bid Price'];
+      console.log(this.result);
+    });
   }
 
   updateData() {
+    this.converter();
     this.getCompanyOverview();
-    this.getPrices();
+    this.getPrices(this.tempo);
     this.updateChart();
   }
 
-  updateChart(){
-    if(this.myChart != undefined){
-      this.myChart.destroy()
+  updateChart() {
+    if (this.myChart != undefined) {
+      this.myChart.destroy();
     }
   }
 
@@ -48,24 +62,41 @@ export class DashboardComponent implements OnInit {
       this.baixaSemana = data['52WeekLow'];
       this.symbolName = data['Symbol'];
       this.name = data['Name'];
-
     });
   }
 
-  getPrices() {
+  getPrices(tempo: string) {
     const response = this.alpha.getSeries(this.symbolName).pipe(shareReplay());
     response.subscribe((data) => {
       let dados = data['Time Series (Daily)'];
       let dateArray: string[] = Object.keys(dados).reverse();
-      this.dataSet = dateArray;
       let priceArray: number[] = Array(dados);
       priceArray.forEach((element: any) => {
         let price: any = Object.values(element).map(
           (res: any) => res['4. close']
-        );
-        this.stockPrices = price.reverse();
+        ).reverse()
+        switch (tempo) {
+          case '90':
+            this.stockPrices = price.slice(10)
+            this.dataSet = dateArray.slice(10);
+            this.updateChart()
+            break;
+          case '30':
+            this.stockPrices = price.slice(70)
+            this.dataSet = dateArray.slice(70);
+            this.updateChart()
+            break;
+          default:
+            this.stockPrices = price.slice(93)
+            this.dataSet = dateArray.slice(93);
+            this.updateChart()
+            break;
+          }
+          for (let i = 0; i < this.dataSet.length; i++) {
+            this.dataSet[i] = this.datetransform.transform(this.dataSet[i]);
+          }
+          this.renderChart(this.dataSet, this.stockPrices, this.symbolName);
       });
-      this.renderChart(this.dataSet, this.stockPrices, this.symbolName);
     });
   }
 
@@ -106,6 +137,6 @@ export class DashboardComponent implements OnInit {
         },
       },
     });
-    return this.myChart
+    return this.myChart;
   }
 }

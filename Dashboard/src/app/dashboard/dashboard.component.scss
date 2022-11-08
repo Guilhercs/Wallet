@@ -10,13 +10,38 @@
   }
 }
 
+.exchange {
+  margin-left: 24px;
+  .converter {
+    border-radius: 5px;
+    width: 30px;
+    margin: 10px 0px 10px 0px;
+  }
+  button{
+    margin-left: 10px;
+    background-color: goldenrod;
+  }
+  p{
+    background-color: #3f51b5;
+  }
+  .result{
+    background-color: #3f51b5;
+    width: 80px;
+    padding: 5px;
+    border-radius: 5px;
+    border-style: solid;
+  }
+
+}
+
 .cards {
   background-color: #3f51b5;
-  .title{
+  .title {
     margin: 0px 0px 10px 24px;
     padding-top: 10px;
   }
-  .symbol, p{
+  .symbol,
+  p {
     margin: 0px 0px 10px 24px;
   }
   margin: 24px 20px 20px 24px;
