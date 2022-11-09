@@ -8,24 +8,9 @@
   </div>
 </div>
 <div class="exchange">
-  <mat-input-container>
-    <input
-      class="converter"
-      matInput
-      type="text"
-      placeholder="USD"
-      [(ngModel)]="dol"
-    />
-    to
-    <input
-      class="converter"
-      matInput
-      type="text"
-      placeholder="BRL"
-      [(ngModel)]="brl"
-    />
-    <button mat-button type="button" (click)="converter()">Converter</button>
-    <p class="result" *ngIf="result">{{ result }}</p>
+  <mat-input-container class="conversor">
+    <p class="result" *ngIf="resultDolar">Dólar: {{ resultDolar | currency: 'BRL' }}</p>
+    <p class="result" *ngIf="resultBtc">Bitcoin: {{ resultBtc | currency: 'BRL'}}</p>
   </mat-input-container>
 </div>
 <div class="cards">
@@ -34,7 +19,7 @@
     <h3 class="symbol" *ngIf="symbolName">{{ symbolName }}</h3>
     <p *ngIf="name">{{ name }}</p>
   </div>
-  <div class="buttom">
+  <div class="button">
     <button mat-raised-button (click)="getPrices('')">7D</button>
     <button mat-raised-button (click)="getPrices('30')">1M</button>
     <button mat-raised-button (click)="getPrices('90')">3M</button>
@@ -50,7 +35,9 @@
 </div>
 <div class="cards">
   <mat-card>
+    <p *ngIf="industry">Indústria: {{industry | titlecase}}</p>
     <p *ngIf="altaSemana">Alta em 52 semanas {{ altaSemana }}</p>
     <p *ngIf="baixaSemana">Baixa em 52 semanas {{ baixaSemana }}</p>
+    <p *ngIf="dividendLastDate">Ultimo pagamento de dividendos {{dividendLastDate}} </p>
   </mat-card>
 </div>

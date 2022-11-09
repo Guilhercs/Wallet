@@ -1,31 +1,48 @@
+import { AlphaVantageService } from './../shared/services/alpha-vantage.service';
 import { Component, OnInit } from '@angular/core';
+import { FormControl, FormGroup } from '@angular/forms';
 import { Chart, registerables } from 'chart.js';
-
 
 Chart.register(...registerables);
 @Component({
   selector: 'app-carteira',
   templateUrl: './carteira.component.html',
-  styleUrls: ['./carteira.component.scss']
+  styleUrls: ['./carteira.component.scss'],
 })
 export class CarteiraComponent implements OnInit {
   myChart!: Chart;
+  myGroup: FormGroup<{ firstName: FormControl<any> }>;
 
-  constructor() { }
+  constructor(private alpha: AlphaVantageService) {
+    this.myGroup = new FormGroup({
+      firstName: new FormControl(),
+    });
+  }
 
   ngOnInit(): void {
-    this.renderPieChart()
+    this.updateChart();
+    this.getData()
   }
+
+  updateChart() {
+    this.renderPieChart();
+  }
+
+  getData() {
+    this.alpha.walletDB().subscribe(res => {
+      console.log(res);
+    })
+   }
 
   renderPieChart() {
     this.myChart = new Chart('pieChart', {
       type: 'pie',
       data: {
-        labels: [1, 2, 3, 4, 5, 6], //nome da ação
+        labels: ["TAEE4", 'WEGE3', 'KLBN4', 'ITUB3', 'VALE3', 'ITSA4'], //nome da ação
         datasets: [
           {
             label: `Distribuição`,
-            data: [1,2,3,40,7,8],//porcentagem
+            data: [100, 80, 300, 200, 50, 300],
             backgroundColor: [
               'rgba(255, 99, 132, 0.2)',
               'rgba(54, 162, 235, 0.2)',
@@ -54,6 +71,6 @@ export class CarteiraComponent implements OnInit {
         },
       },
     });
-    return this.myChart
+    return this.myChart;
   }
 }
