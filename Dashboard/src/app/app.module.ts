@@ -19,7 +19,8 @@ import { CarteiraComponent } from './carteira/carteira.component';
 import { MatListModule } from '@angular/material/list';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatInputModule } from '@angular/material/input';
-import {ReactiveFormsModule } from '@angular/forms'
+import {ReactiveFormsModule } from '@angular/forms';
+import {MatTableModule} from '@angular/material/table';
 @NgModule({
   declarations: [
     AppComponent,
@@ -43,6 +44,7 @@ import {ReactiveFormsModule } from '@angular/forms'
     MatGridListModule,
     MatInputModule,
     ReactiveFormsModule,
+    MatTableModule,
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   providers: [DatePipe],

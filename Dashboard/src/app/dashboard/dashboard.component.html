@@ -2,7 +2,7 @@
   <div class="search">
     <label>Buscar: </label>
     <mat-input-container>
-      <input matInput type="text" placeholder="JPM" [(ngModel)]="symbolName" />
+      <input id="ticker" matInput type="text" placeholder="TAEE4" [(ngModel)]="symbolName" />
       <button mat-button type="submit" (click)="updateData()">Inserir</button>
     </mat-input-container>
   </div>
@@ -20,9 +20,9 @@
     <p *ngIf="name">{{ name }}</p>
   </div>
   <div class="button">
-    <button mat-raised-button (click)="getPrices('')">7D</button>
+    <!-- <button mat-raised-button (click)="getPrices('')">7D</button>
     <button mat-raised-button (click)="getPrices('30')">1M</button>
-    <button mat-raised-button (click)="getPrices('90')">3M</button>
+    <button mat-raised-button (click)="getPrices('90')">3M</button> -->
   </div>
   <mat-card>
     <canvas id="lineChart"> </canvas>
@@ -36,8 +36,6 @@
 <div class="cards">
   <mat-card>
     <p *ngIf="industry">Indústria: {{industry | titlecase}}</p>
-    <p *ngIf="altaSemana">Alta em 52 semanas {{ altaSemana }}</p>
-    <p *ngIf="baixaSemana">Baixa em 52 semanas {{ baixaSemana }}</p>
     <p *ngIf="dividendLastDate">Ultimo pagamento de dividendos {{dividendLastDate}} </p>
   </mat-card>
 </div>

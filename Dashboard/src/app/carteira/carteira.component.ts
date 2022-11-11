@@ -2,6 +2,7 @@ import { AlphaVantageService } from './../shared/services/alpha-vantage.service'
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { Chart, registerables } from 'chart.js';
+import { map } from 'rxjs';
 
 Chart.register(...registerables);
 @Component({
@@ -9,36 +10,32 @@ Chart.register(...registerables);
   templateUrl: './carteira.component.html',
   styleUrls: ['./carteira.component.scss'],
 })
+
 export class CarteiraComponent implements OnInit {
   myChart!: Chart;
   myGroup: FormGroup<{ firstName: FormControl<any> }>;
-
+  data!: any;
+  displayedColumns = ['id', 'symbol', 'price', 'quantidade']
   constructor(private alpha: AlphaVantageService) {
     this.myGroup = new FormGroup({
       firstName: new FormControl(),
     });
   }
 
+
   ngOnInit(): void {
-    this.updateChart();
-    this.getData()
+    this.alpha.backend().subscribe((res) => {
+      this.data = res
+    });
   }
 
-  updateChart() {
-    this.renderPieChart();
-  }
+  updateChart() {}
 
-  getData() {
-    this.alpha.walletDB().subscribe(res => {
-      console.log(res);
-    })
-   }
-
-  renderPieChart() {
+  renderPieChart(ticker: any) {
     this.myChart = new Chart('pieChart', {
       type: 'pie',
       data: {
-        labels: ["TAEE4", 'WEGE3', 'KLBN4', 'ITUB3', 'VALE3', 'ITSA4'], //nome da ação
+        labels: ticker,
         datasets: [
           {
             label: `Distribuição`,

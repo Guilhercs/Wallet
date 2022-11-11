@@ -3,7 +3,7 @@ import { DatePipe } from './../shared/pipe/date.pipe';
 import { AlphaVantageService } from '../shared/services/alpha-vantage.service';
 import { Component, OnInit } from '@angular/core';
 import { Chart, registerables } from 'node_modules/chart.js';
-import { shareReplay} from 'rxjs';
+import { concat, shareReplay } from 'rxjs';
 
 Chart.register(...registerables);
 @Component({
@@ -14,7 +14,7 @@ Chart.register(...registerables);
 export class DashboardComponent implements OnInit {
   stockPrices!: number[];
   dataSet: string[] = [];
-  symbolName: string = 'JPM';
+  symbolName: string = 'ITSA';
   altaSemana!: string;
   baixaSemana!: string;
   descricao!: string;
@@ -33,13 +33,22 @@ export class DashboardComponent implements OnInit {
     private alpha: AlphaVantageService,
     private datetransform: DatePipe,
     private http: HttpClient
-  ) {
-  }
+  ) {}
 
   ngOnInit(): void {
     this.updateData();
-    // this.alpha.getB3Data().subscribe(res => {console.log(res);
+    this.getCompanyOverview();
+    // this.alpha.walletDB(this.symbolName).subscribe(res => {
+    //   console.log(res);
+
     // })
+  }
+
+  filterInput() {
+    let input, filter
+    input = document.getElementById('ticker') as any;
+    filter = input.value?.toUpperCase().concat('.SA')
+    this.symbolName = filter
   }
 
   converter() {
@@ -55,9 +64,11 @@ export class DashboardComponent implements OnInit {
   }
 
   updateData() {
+    // this.filterInput();
     this.converter();
     this.getCompanyOverview();
     this.getPrices(this.tempo);
+    // this.getFullHistory();
     this.updateChart();
   }
 
@@ -68,25 +79,37 @@ export class DashboardComponent implements OnInit {
   }
 
   getCompanyOverview() {
-    let overview = this.alpha.getData(this.symbolName).pipe(shareReplay());
+    let overview = this.alpha.companies().pipe();
     overview.subscribe((data) => {
       console.log(data);
-      this.descricao = data['Description'];
-      this.altaSemana = data['52WeekHigh'];
-      this.baixaSemana = data['52WeekLow'];
-      this.symbolName = data['Symbol'];
-      this.name = data['Name'];
-      this.dividendLastDate = data['DividendDate'];
-      this.exDividendDate = data['ExDividendDate'];
-      this.industry = data['Industry'].toLowerCase();
+     let dado = data.find((element: any) => element['b3_issuer_code'] === this.symbolName);
+     this.industry = dado.b3_sector;
     });
   }
+
+  // getFullHistory() {
+  //   const response = this.alpha
+  //     .getSeriesFull(this.symbolName)
+  //     .pipe(shareReplay());
+  //   response.subscribe((data: any) => {
+  //     let dados = data['Time Series (Daily)'];
+  //     let dateArray: string[] = Object.keys(dados).reverse();
+  //     this.dataSet = dateArray;
+  //     let priceArray: number[] = Array(dados);
+  //     priceArray.forEach((element: any) => {
+  //       let price: any = Object.values(element)
+  //         .map((res: any) => res['4. close'])
+  //         .reverse();
+  //       this.stockPrices = price;
+  //     });
+  //     this.renderChart(this.dataSet, this.stockPrices, this.symbolName);
+  //   });
+  // }
 
   getPrices(tempo: string) {
     const response = this.alpha.getSeries(this.symbolName).pipe(shareReplay());
     response.subscribe((data) => {
       let dados = data['Time Series (Daily)'];
-      console.log(dados);
       let dateArray: string[] = Object.keys(dados).reverse();
       let priceArray: number[] = Array(dados);
       priceArray.forEach((element: any) => {
