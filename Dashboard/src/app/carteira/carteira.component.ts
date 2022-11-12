@@ -2,7 +2,7 @@ import { AlphaVantageService } from './../shared/services/alpha-vantage.service'
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { Chart, registerables } from 'chart.js';
-import { map } from 'rxjs';
+import { __values } from 'tslib';
 
 Chart.register(...registerables);
 @Component({
@@ -10,36 +10,50 @@ Chart.register(...registerables);
   templateUrl: './carteira.component.html',
   styleUrls: ['./carteira.component.scss'],
 })
-
 export class CarteiraComponent implements OnInit {
   myChart!: Chart;
   myGroup: FormGroup<{ firstName: FormControl<any> }>;
   data!: any;
-  displayedColumns = ['id', 'symbol', 'price', 'quantidade']
+  ticker: any;
+  displayedColumns = ['id', 'symbol', 'price', 'quantidade'];
+  qnt: any;
+  soma: any;
+  preco: any;
   constructor(private alpha: AlphaVantageService) {
     this.myGroup = new FormGroup({
       firstName: new FormControl(),
     });
   }
 
-
   ngOnInit(): void {
+    this.updateChart();
+  }
+
+  updateChart() {
+    this.renderChartData();
+  }
+
+  renderChartData() {
     this.alpha.backend().subscribe((res) => {
-      this.data = res
+      this.data = res;
+      console.log(res);
+      let data = Array(res);
+      data.forEach((element: any) => {
+        let ticker = Object.values(element).map((res: any) => res.symbol);
+        this.renderPieChart(ticker)
+      });
     });
   }
 
-  updateChart() {}
-
-  renderPieChart(ticker: any) {
+  renderPieChart(ticker: any, soma?: any) {
     this.myChart = new Chart('pieChart', {
       type: 'pie',
       data: {
         labels: ticker,
         datasets: [
           {
-            label: `Distribuição`,
-            data: [100, 80, 300, 200, 50, 300],
+            label: 'none',
+            data: [10, 20, 30, 40],
             backgroundColor: [
               'rgba(255, 99, 132, 0.2)',
               'rgba(54, 162, 235, 0.2)',

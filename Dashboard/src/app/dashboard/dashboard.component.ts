@@ -14,7 +14,7 @@ Chart.register(...registerables);
 export class DashboardComponent implements OnInit {
   stockPrices!: number[];
   dataSet: string[] = [];
-  symbolName: string = 'ITSA';
+  symbolName: string = 'JPM';
   altaSemana!: string;
   baixaSemana!: string;
   descricao!: string;
@@ -107,8 +107,9 @@ export class DashboardComponent implements OnInit {
   // }
 
   getPrices(tempo: string) {
-    const response = this.alpha.getSeries(this.symbolName).pipe(shareReplay());
+    const response = this.alpha.getSeries(this.symbolName)
     response.subscribe((data) => {
+      console.log(data);
       let dados = data['Time Series (Daily)'];
       let dateArray: string[] = Object.keys(dados).reverse();
       let priceArray: number[] = Array(dados);
