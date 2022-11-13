@@ -1,6 +1,7 @@
 <div>
   <mat-card class="cards">
     <button class="adiciona" mat-button (click)="formRoute()">adicionar ação</button>
+    <h3 *ngIf="total">Patrimônio {{total | currency: 'BRL'}}</h3>
   </mat-card>
 </div>
 

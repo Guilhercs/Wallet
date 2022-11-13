@@ -1,3 +1,4 @@
+import { Router } from '@angular/router';
 import { CarteiraService } from './../shared/services/carteira.services/carteira.service';
 import { Component, OnInit } from '@angular/core';
 import { Acoes } from '../shared/interfaces/acoes.interface';
@@ -9,14 +10,14 @@ import { Acoes } from '../shared/interfaces/acoes.interface';
 })
 export class FormComponent implements OnInit {
   acoes: Acoes = {
-    id: 5,
-    symbol: 'test3',
-    price: 80.3,
-    date: '10/10/2010',
-    quantidade: 20,
+    symbol: '',
+    price: 0,
+    date: '',
+    quantidade: 0
   };
   constructor(
     private carteira: CarteiraService,
+    private router: Router,
   ) { }
 
   ngOnInit(): void {
@@ -25,6 +26,13 @@ export class FormComponent implements OnInit {
   createTicker() {
     this.carteira.createTicker(this.acoes).subscribe(() => {
       this.carteira.showMessage('Ação adicionada com sucesso!');
+      this.router.navigate(['/carteira'])
     });
   }
+
+  cancelar() {
+    this.carteira.showMessage('Ação cancelada!');
+    this.router.navigate(['/carteira'])
+  }
 }
+

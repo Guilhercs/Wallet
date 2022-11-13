@@ -1,6 +1,5 @@
 export interface Acoes {
-  [x: string]: any;
-  id: number,
+  id?: number,
   symbol: string,
   price: number,
   date: string,

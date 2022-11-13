@@ -1,1 +1,34 @@
-<p>form works!</p>
+<div class="cards">
+  <form class="example-form">
+    <mat-form-field class="example-full-width" appearance="fill">
+      <mat-label>Ticker</mat-label>
+      <input matInput placeholder="Ex. TAEE4"
+      required
+      [(ngModel)]="acoes.symbol" name="symbol"/>
+    </mat-form-field>
+    <mat-form-field class="example-full-width" appearance="fill">
+      <mat-label>Preço</mat-label>
+      <input matInput placeholder="Ex. 12.35"
+      required
+      [(ngModel)]="acoes.price" name="price"/>
+    </mat-form-field>
+    <mat-form-field class="example-full-width" appearance="fill">
+      <mat-label>Quantidade</mat-label>
+      <input matInput placeholder="100"
+      required
+      [(ngModel)]="acoes.quantidade" name="quantidade"/>
+    </mat-form-field>
+    <mat-form-field class="example-full-width" appearance="fill">
+      <mat-label>Data da compra</mat-label>
+      <input matInput placeholder="01/11/2021"
+      required
+      [(ngModel)]="acoes.date" name="date"/>
+    </mat-form-field>
+  </form>
+</div>
+<button mat-button class="adicionar" (click)="createTicker()">Adicionar</button>
+<button mat-button class="cancelar" (click)="cancelar()">Cancelar</button>
+
+
+
+
