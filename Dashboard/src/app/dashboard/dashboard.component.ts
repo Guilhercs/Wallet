@@ -1,6 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { DatePipe } from './../shared/pipe/date.pipe';
-import { AlphaVantageService } from '../shared/services/alpha-vantage.service';
+import { AlphaVantageService } from '../shared/services/alpha.services/alpha-vantage.service';
 import { Component, OnInit } from '@angular/core';
 import { Chart, registerables } from 'node_modules/chart.js';
 import { concat, shareReplay } from 'rxjs';
@@ -37,11 +37,7 @@ export class DashboardComponent implements OnInit {
 
   ngOnInit(): void {
     this.updateData();
-    this.getCompanyOverview();
-    // this.alpha.walletDB(this.symbolName).subscribe(res => {
-    //   console.log(res);
-
-    // })
+    // this.getCompanyOverview();
   }
 
   filterInput() {
@@ -66,7 +62,7 @@ export class DashboardComponent implements OnInit {
   updateData() {
     // this.filterInput();
     this.converter();
-    this.getCompanyOverview();
+    // this.getCompanyOverview();
     this.getPrices(this.tempo);
     // this.getFullHistory();
     this.updateChart();
@@ -78,14 +74,14 @@ export class DashboardComponent implements OnInit {
     }
   }
 
-  getCompanyOverview() {
-    let overview = this.alpha.companies().pipe();
-    overview.subscribe((data) => {
-      console.log(data);
-     let dado = data.find((element: any) => element['b3_issuer_code'] === this.symbolName);
-     this.industry = dado.b3_sector;
-    });
-  }
+  // getCompanyOverview() {
+  //   let overview = this.alpha.companies().pipe();
+  //   overview.subscribe((data) => {
+  //     console.log(data);
+  //    let dado = data.find((element: any) => element['b3_issuer_code'] === this.symbolName);
+  //    this.industry = dado.b3_sector;
+  //   });
+  // }
 
   // getFullHistory() {
   //   const response = this.alpha

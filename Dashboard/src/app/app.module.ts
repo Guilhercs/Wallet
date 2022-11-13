@@ -1,4 +1,4 @@
-import { AlphaVantageService } from './shared/services/alpha-vantage.service';
+import { AlphaVantageService } from './shared/services/alpha.services/alpha-vantage.service';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
@@ -21,6 +21,8 @@ import { MatGridListModule } from '@angular/material/grid-list';
 import { MatInputModule } from '@angular/material/input';
 import {ReactiveFormsModule } from '@angular/forms';
 import {MatTableModule} from '@angular/material/table';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { FormComponent } from './form/form.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -28,6 +30,7 @@ import {MatTableModule} from '@angular/material/table';
     NavComponent,
     DatePipe,
     CarteiraComponent,
+    FormComponent,
   ],
   imports: [
     BrowserModule,
@@ -45,6 +48,7 @@ import {MatTableModule} from '@angular/material/table';
     MatInputModule,
     ReactiveFormsModule,
     MatTableModule,
+    MatSnackBarModule,
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   providers: [DatePipe],

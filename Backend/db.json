@@ -1,31 +1,31 @@
 {
   "acoes": [
     {
-      "id": 0,
       "symbol": "TAEE4",
-      "price": 13.4,
+      "price": 12.2,
       "date": "12/12/2012",
-      "quantidade": 100
+      "quantidade": 100,
+      "id": 0
     },
     {
-      "id": 1,
       "symbol": "ITSA4",
-      "price": 13.4,
-      "date": "12/12/2012",
-      "quantidade": 100
+      "price": 13.89,
+      "date": "12/12/2018",
+      "quantidade": 100,
+      "id": 1
     },
     {
-      "id": 2,
       "symbol": "WEGE3",
-      "price": 13.4,
-      "date": "12/12/2012",
-      "quantidade": 100
+      "price": 25.8,
+      "date": "12/12/2019",
+      "quantidade": 100,
+      "id": 2
     },
     {
       "symbol": "KLBN4",
-      "price": "3.60",
+      "price": 3.60,
       "date": "09/11/2022",
-      "quantidade": "200",
+      "quantidade": 200,
       "id": 3
     }
   ]
