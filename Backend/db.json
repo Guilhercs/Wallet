@@ -27,6 +27,13 @@
       "date": "09/11/2022",
       "quantidade": 200,
       "id": 3
+    },
+    {
+      "symbol": "ITUB3",
+      "price": "25.35",
+      "date": "01/11/2011",
+      "quantidade": "100",
+      "id": 4
     }
   ]
 }

@@ -1,10 +1,9 @@
+import { DadosDeMercadoService } from './../shared/services/ddm.services/dados-de-mercado.service';
 import { Acoes } from './../shared/interfaces/acoes.interface';
 import { CarteiraService } from './../shared/services/carteira.services/carteira.service';
 import { Component, OnInit, Pipe } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
 import { Chart, registerables } from 'chart.js';
 import { Router } from '@angular/router';
-import { toArray, concat } from 'rxjs';
 
 Chart.register(...registerables);
 @Component({
@@ -15,7 +14,7 @@ Chart.register(...registerables);
 export class CarteiraComponent implements OnInit {
   myChart!: Chart;
   data!: any;
-  ticker!: string;
+  ticker: string = 'TAEE4';
   displayedColumns = ['id', 'symbol', 'price', 'quantidade', 'total'];
   qnt!: number;
   mult!: number;
@@ -23,11 +22,23 @@ export class CarteiraComponent implements OnInit {
   total: any;
   porcentagem: any;
 
-  constructor(private carteira: CarteiraService, private router: Router) {
-  }
+  constructor(
+    private carteira: CarteiraService,
+    private router: Router,
+    private dados: DadosDeMercadoService
+  ) {}
 
   ngOnInit(): void {
     this.updateWallet();
+  }
+  getPriceToday() {
+    this.dados.getQuotes(this.ticker).subscribe((res) => {
+      console.log(res);
+      let arr = Array(res);
+     let banana = arr.map((res: any) => res[res.length - 1].close)
+     console.log(banana);
+
+    });
   }
 
   formRoute() {
@@ -37,6 +48,7 @@ export class CarteiraComponent implements OnInit {
   updateWallet() {
     this.tableInfo();
     this.renderChartData();
+    this.getPriceToday();
     this.updateChart();
   }
 
@@ -63,12 +75,10 @@ export class CarteiraComponent implements OnInit {
         this.total = valores.reduce(reducer);
         let calc = Object.values(element).map((res: Acoes) => {
           let mult = res.price * res.quantidade;
-          console.log(mult);
           let porcentagem = (mult * 100) / this.total;
-          return Math.round(porcentagem) //.toString().concat('%');
+          return Math.round(porcentagem); //.toString().concat('%');
         });
         this.porcentagem = calc;
-        console.log(calc);
         this.renderPieChart(ticker, this.porcentagem);
       });
     });

@@ -1,3 +1,4 @@
+import { DadosDeMercadoService } from './../shared/services/ddm.services/dados-de-mercado.service';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { DatePipe } from './../shared/pipe/date.pipe';
 import { AlphaVantageService } from '../shared/services/alpha.services/alpha-vantage.service';
@@ -14,7 +15,7 @@ Chart.register(...registerables);
 export class DashboardComponent implements OnInit {
   stockPrices!: number[];
   dataSet: string[] = [];
-  symbolName: string = 'JPM';
+  symbolName: string = 'TAEE';
   altaSemana!: string;
   baixaSemana!: string;
   descricao!: string;
@@ -26,13 +27,11 @@ export class DashboardComponent implements OnInit {
   resultDolar!: string;
   resultBtc!: string;
   tempo!: string;
-  dividendLastDate!: string;
-  exDividendDate!: string;
-  industry!: string;
+  data: any;
   constructor(
     private alpha: AlphaVantageService,
     private datetransform: DatePipe,
-    private http: HttpClient
+    private dados: DadosDeMercadoService,
   ) {}
 
   ngOnInit(): void {
@@ -40,12 +39,12 @@ export class DashboardComponent implements OnInit {
     // this.getCompanyOverview();
   }
 
-  filterInput() {
-    let input, filter
-    input = document.getElementById('ticker') as any;
-    filter = input.value?.toUpperCase().concat('.SA')
-    this.symbolName = filter
-  }
+  // filterInput() {
+  //   let input, filter
+  //   input = document.getElementById('ticker') as any;
+  //   filter = input.value?.toUpperCase()
+  //   this.symbolName = filter
+  // }
 
   converter() {
     const dolar = this.alpha.getExchange(this.dol, this.brl);
@@ -62,8 +61,8 @@ export class DashboardComponent implements OnInit {
   updateData() {
     // this.filterInput();
     this.converter();
-    // this.getCompanyOverview();
     this.getPrices(this.tempo);
+    this.getCompanyOverview();
     // this.getFullHistory();
     this.updateChart();
   }
@@ -74,14 +73,14 @@ export class DashboardComponent implements OnInit {
     }
   }
 
-  // getCompanyOverview() {
-  //   let overview = this.alpha.companies().pipe();
-  //   overview.subscribe((data) => {
-  //     console.log(data);
-  //    let dado = data.find((element: any) => element['b3_issuer_code'] === this.symbolName);
-  //    this.industry = dado.b3_sector;
-  //   });
-  // }
+  getCompanyOverview() {
+    let overview = this.dados.getOverview().pipe();
+    overview.subscribe((data) => {
+      console.log(data);
+     let dados = data.find((element: any) => element['b3_issuer_code'] === this.symbolName);
+     this.data = Array(dados)
+    });
+  }
 
   // getFullHistory() {
   //   const response = this.alpha

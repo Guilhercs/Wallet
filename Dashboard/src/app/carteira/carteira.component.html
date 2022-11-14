@@ -1,7 +1,7 @@
 <div>
   <mat-card class="cards">
-    <button class="adiciona" mat-button (click)="formRoute()">adicionar ação</button>
-    <h3 *ngIf="total">Patrimônio {{total | currency: 'BRL'}}</h3>
+    <h3 *ngIf="total">Patrimônio Total: {{total | currency: 'BRL'}}</h3>
+    <h3>Lucro/prejuizo: </h3>
   </mat-card>
 </div>
 
@@ -35,12 +35,20 @@
     </ng-container>
 
     <ng-container matColumnDef="total">
-      <th mat-header-cell *matHeaderCellDef>Total</th>
-      <td mat-cell *matCellDef="let element">{{ element.quantidade * element.price}}</td>
+      <th mat-header-cell *matHeaderCellDef>Total Pago</th>
+      <td id="totalPago" mat-cell *matCellDef="let element">{{ element.quantidade * element.price | currency: 'BRL'}}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="Valortotal">
+      <th mat-header-cell *matHeaderCellDef>Valor Atual</th>
+      <td mat-cell></td>
     </ng-container>
 
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
     <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
   </table>
+  <div class="button-form">
+    <button class="adicionar" mat-button (click)="formRoute()">Adicionar ação</button>
+  </div>
 </mat-card>
 
