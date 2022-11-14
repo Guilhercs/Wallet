@@ -15,7 +15,7 @@ export class CarteiraComponent implements OnInit {
   myChart!: Chart;
   data!: any;
   ticker: string = 'TAEE4';
-  displayedColumns = ['id', 'symbol', 'price', 'quantidade', 'total'];
+  displayedColumns = ['id', 'symbol', 'price', 'quantidade', 'total', 'acoes'];
   qnt!: number;
   mult!: number;
   preco!: number;
@@ -76,22 +76,24 @@ export class CarteiraComponent implements OnInit {
         let calc = Object.values(element).map((res: Acoes) => {
           let mult = res.price * res.quantidade;
           let porcentagem = (mult * 100) / this.total;
-          return Math.round(porcentagem); //.toString().concat('%');
+          return Math.round(porcentagem) //.toString().concat('%');
         });
+        console.log(calc);
+
         this.porcentagem = calc;
         this.renderPieChart(ticker, this.porcentagem);
       });
     });
   }
 
-  renderPieChart(ticker: any, soma: any) {
+  renderPieChart(ticker: any, soma?: any) {
     this.myChart = new Chart('pieChart', {
       type: 'pie',
       data: {
         labels: ticker,
         datasets: [
           {
-            data: soma, //concat('%'),
+            data: soma,
             backgroundColor: [
               'rgba(255, 99, 132, 0.2)',
               'rgba(54, 162, 235, 0.2)',

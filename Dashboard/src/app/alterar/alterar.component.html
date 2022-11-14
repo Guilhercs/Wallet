@@ -1,0 +1,42 @@
+<mat-card>
+  <mat-card-title>Alterar Produto</mat-card-title>
+  <form>
+    <mat-form-field>
+      <input
+        matInput
+        placeholder="Ticker"
+        [value]="acoes.symbol"
+        name="symbol"
+      />
+    </mat-form-field>
+    <mat-form-field>
+      <input
+        matInput
+        placeholder="preço (R$)"
+        [value]="acoes.price"
+        name="price"
+      />
+    </mat-form-field>
+    <mat-form-field>
+      <input
+        matInput
+        placeholder="quantidade"
+        [value]="acoes.quantidade"
+        name="quantidade"
+      />
+    </mat-form-field>
+    <mat-form-field>
+      <input
+        matInput
+        placeholder="data"
+        [value]="acoes.date"
+        name="date"
+      />
+    </mat-form-field>
+  </form>
+
+  <button mat-raised-button (click)="alterar()" color="primary">
+    Alterar
+  </button>
+  <button mat-raised-button (click)="cancelar()">Cancelar</button>
+</mat-card>

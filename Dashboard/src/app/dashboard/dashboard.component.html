@@ -29,17 +29,12 @@
   </mat-card>
 </div>
 <div class="cards">
-  <mat-card>
-    <p *ngIf="descricao">{{ descricao }}</p>
-  </mat-card>
-</div>
-<div class="cards">
   <mat-card *ngFor="let data of data" >
     <p>Indústria: {{data.b3_sector}}</p>
     <p>Segmento: {{data.b3_segment}}</p>
-    <p>Desde: {{data.founding_date}}</p>
-    <p>Atividade princical: {{data.main_Activity}}</p>
-    <p>Nome da marca: {{data.tradeName}}</p>
+    <p>Desde: {{data.founding_date | date}}</p>
+    <p>Atividade princical: {{data.main_activity}}</p>
+    <p>Nome da marca: {{data.trade_name}}</p>
     <p>Site: {{data.website}}</p>
   </mat-card>
 </div>

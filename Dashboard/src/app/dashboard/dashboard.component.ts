@@ -15,7 +15,7 @@ Chart.register(...registerables);
 export class DashboardComponent implements OnInit {
   stockPrices!: number[];
   dataSet: string[] = [];
-  symbolName: string = 'TAEE';
+  symbolName: string = 'VALE3';
   altaSemana!: string;
   baixaSemana!: string;
   descricao!: string;
@@ -31,20 +31,29 @@ export class DashboardComponent implements OnInit {
   constructor(
     private alpha: AlphaVantageService,
     private datetransform: DatePipe,
-    private dados: DadosDeMercadoService,
+    private dados: DadosDeMercadoService
   ) {}
 
   ngOnInit(): void {
     this.updateData();
+    // this.filterInput();
     // this.getCompanyOverview();
   }
 
-  // filterInput() {
-  //   let input, filter
-  //   input = document.getElementById('ticker') as any;
-  //   filter = input.value?.toUpperCase()
-  //   this.symbolName = filter
-  // }
+  updateData() {
+    this.converter();
+    this.getCompanyOverview();
+    this.getPrices(this.tempo);
+    // this.getFullHistory();
+    this.updateChart();
+  }
+
+  filterInput() {
+    let input, filter
+    input = document.getElementById('ticker') as any;
+    filter = input.value?.toUpperCase()
+    this.symbolName = filter
+  }
 
   converter() {
     const dolar = this.alpha.getExchange(this.dol, this.brl);
@@ -58,14 +67,6 @@ export class DashboardComponent implements OnInit {
     });
   }
 
-  updateData() {
-    // this.filterInput();
-    this.converter();
-    this.getPrices(this.tempo);
-    this.getCompanyOverview();
-    // this.getFullHistory();
-    this.updateChart();
-  }
 
   updateChart() {
     if (this.myChart != undefined) {
@@ -77,8 +78,11 @@ export class DashboardComponent implements OnInit {
     let overview = this.dados.getOverview().pipe();
     overview.subscribe((data) => {
       console.log(data);
-     let dados = data.find((element: any) => element['b3_issuer_code'] === this.symbolName);
-     this.data = Array(dados)
+      let dados = data.find(
+        (element: any) =>
+          element['b3_issuer_code'] === this.symbolName.substring(0, 4).toUpperCase()
+      );
+      this.data = Array(dados);
     });
   }
 
@@ -102,7 +106,7 @@ export class DashboardComponent implements OnInit {
   // }
 
   getPrices(tempo: string) {
-    const response = this.alpha.getSeries(this.symbolName)
+    const response = this.alpha.getSeries(this.symbolName);
     response.subscribe((data) => {
       console.log(data);
       let dados = data['Time Series (Daily)'];

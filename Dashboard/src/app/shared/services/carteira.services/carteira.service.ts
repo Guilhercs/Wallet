@@ -18,6 +18,20 @@ export class CarteiraService {
     return this.http.post<Acoes>(`${this.DBWALLET}`, acoes);
   }
 
+  getId(id: string): Observable<Acoes> {
+    const url = `${this.DBWALLET}/${id}`;
+    return this.http.get<Acoes>(url)
+  }
+
+  deletar(id: number): Observable<Acoes> {
+    const url = `${this.DBWALLET}/${id}`;
+    return this.http.delete<Acoes>(url);
+  }
+
+  atualizar(acoes: Acoes): Observable<Acoes> {
+    const url = `${this.DBWALLET}/${acoes.id}`;
+    return this.http.put<Acoes>(url, acoes);
+  }
   showMessage(msg: string): void {
     this.snackBar.open(msg, 'X', {
       duration: 3000,
