@@ -16,6 +16,10 @@ export class DadosDeMercadoService {
     return this.http.get(`${this.BASEURL}companies`)
   }
 
+  getMarketRatios(ticker: string): Observable<any> {
+    return this.http.get(`${this.BASEURL}indicadores?ticker=${ticker}`)
+  }
+
   getQuotes(ticker: string): Observable<Cotas> {
     return this.http.get<Cotas>(`${this.BASEURL}quotes?ticker=${ticker}`)
   }

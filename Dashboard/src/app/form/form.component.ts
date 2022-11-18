@@ -10,11 +10,12 @@ import { Acoes } from '../shared/interfaces/acoes.interface';
 })
 export class FormComponent implements OnInit {
   acoes: Acoes = {
-    symbol: '',
-    price: 0,
-    date: '',
-    quantidade: 0
-  };
+    id: 0,
+    symbol: "",
+    price: undefined,
+    date: "",
+    quantidade: undefined,
+  }
   constructor(
     private carteira: CarteiraService,
     private router: Router,

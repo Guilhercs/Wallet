@@ -1,5 +1,4 @@
-import { DadosDeMercadoService } from './../shared/services/ddm.services/dados-de-mercado.service';
-import { Acoes } from './../shared/interfaces/acoes.interface';
+
 import { CarteiraService } from './../shared/services/carteira.services/carteira.service';
 import { Component, OnInit, Pipe } from '@angular/core';
 import { Chart, registerables } from 'chart.js';
@@ -14,31 +13,37 @@ Chart.register(...registerables);
 export class CarteiraComponent implements OnInit {
   myChart!: Chart;
   data!: any;
-  ticker: string = 'TAEE4';
+  ticker: string = 'WEGE3';
   displayedColumns = ['id', 'symbol', 'price', 'quantidade', 'total', 'acoes'];
   qnt!: number;
   mult!: number;
   preco!: number;
-  total: any;
-  porcentagem: any;
+  total!: number;
+  porcentagem!: number[];
+  lastPrice!: number[];
+  symbols: [] = [];
 
-  constructor(
-    private carteira: CarteiraService,
-    private router: Router,
-    private dados: DadosDeMercadoService
-  ) {}
+  constructor(private carteira: CarteiraService, private router: Router) {}
 
   ngOnInit(): void {
+    this.tableInfo()
     this.updateWallet();
   }
-  getPriceToday() {
-    this.dados.getQuotes(this.ticker).subscribe((res) => {
-      console.log(res);
-      let arr = Array(res);
-     let banana = arr.map((res: any) => res[res.length - 1].close)
-     console.log(banana);
-
+  tableInfo() {
+    this.carteira.getWallet().subscribe((res) => {
+      this.data = res;
+     this.symbols = this.data.map((res: any) => res.symbol);
+     this.getPriceToday(this.symbols)
     });
+  }
+  getPriceToday(arr: []) {
+    for(let i = 0; i < arr.length; i++) {
+      this.carteira.getPrices(arr[i]).subscribe((res) => {
+        let arr = Array(res);
+        this.lastPrice = arr.map((res: any) => res[res.length - 1].close);
+        console.log(this.lastPrice);
+      });
+    }
   }
 
   formRoute() {
@@ -48,7 +53,6 @@ export class CarteiraComponent implements OnInit {
   updateWallet() {
     this.tableInfo();
     this.renderChartData();
-    this.getPriceToday();
     this.updateChart();
   }
 
@@ -58,28 +62,20 @@ export class CarteiraComponent implements OnInit {
     }
   }
 
-  tableInfo() {
-    this.carteira.getWallet().subscribe((res) => {
-      this.data = res;
-    });
-  }
-
   renderChartData() {
     this.carteira.getWallet().subscribe((res) => {
       let data = Array(res);
-      data.forEach((element: [Acoes]) => {
+      data.forEach((element: any) => {
         const reducer = (valorInicial: number, ValorAdicional: number) =>
           valorInicial + ValorAdicional;
-        let ticker = Object.values(element).map((res: Acoes) => res.symbol);
-        let valores = element.map((res: Acoes) => res.price * res.quantidade);
+        let ticker = Object.values(element).map((res: any) => res.symbol);
+        let valores = element.map((res: any) => res.price * res.quantidade);
         this.total = valores.reduce(reducer);
-        let calc = Object.values(element).map((res: Acoes) => {
+        let calc = Object.values(element).map((res: any) => {
           let mult = res.price * res.quantidade;
           let porcentagem = (mult * 100) / this.total;
-          return Math.round(porcentagem) //.toString().concat('%');
+          return Math.round(porcentagem); //.toString().concat('%');
         });
-        console.log(calc);
-
         this.porcentagem = calc;
         this.renderPieChart(ticker, this.porcentagem);
       });

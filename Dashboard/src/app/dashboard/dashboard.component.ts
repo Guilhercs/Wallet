@@ -15,7 +15,7 @@ Chart.register(...registerables);
 export class DashboardComponent implements OnInit {
   stockPrices!: number[];
   dataSet: string[] = [];
-  symbolName: string = 'VALE3';
+  symbolName: string = 'ITUB3';
   altaSemana!: string;
   baixaSemana!: string;
   descricao!: string;
@@ -28,6 +28,7 @@ export class DashboardComponent implements OnInit {
   resultBtc!: string;
   tempo!: string;
   data: any;
+  marketRatios!: any;
   constructor(
     private alpha: AlphaVantageService,
     private datetransform: DatePipe,
@@ -35,6 +36,7 @@ export class DashboardComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.getMarketRatios();
     this.updateData();
     // this.filterInput();
     // this.getCompanyOverview();
@@ -46,6 +48,13 @@ export class DashboardComponent implements OnInit {
     this.getPrices(this.tempo);
     // this.getFullHistory();
     this.updateChart();
+  }
+
+  getMarketRatios(){
+    this.dados.getMarketRatios(this.symbolName).subscribe(res => {
+      let arr = Array(res);
+      this.marketRatios = arr.map((res: any) => res[res.length - 1]);
+    })
   }
 
   filterInput() {
@@ -62,7 +71,6 @@ export class DashboardComponent implements OnInit {
     });
     const bitcoin = this.alpha.getExchange(this.btc, this.brl);
     bitcoin.subscribe((res: any) => {
-      console.log(res);
       this.resultBtc = res['Realtime Currency Exchange Rate']['8. Bid Price'];
     });
   }
@@ -77,10 +85,8 @@ export class DashboardComponent implements OnInit {
   getCompanyOverview() {
     let overview = this.dados.getOverview().pipe();
     overview.subscribe((data) => {
-      console.log(data);
-      let dados = data.find(
-        (element: any) =>
-          element['b3_issuer_code'] === this.symbolName.substring(0, 4).toUpperCase()
+      let dados = data.find((element: any) =>
+        element['b3_issuer_code'] === this.symbolName.substring(0, 4).toUpperCase()
       );
       this.data = Array(dados);
     });
@@ -108,7 +114,6 @@ export class DashboardComponent implements OnInit {
   getPrices(tempo: string) {
     const response = this.alpha.getSeries(this.symbolName);
     response.subscribe((data) => {
-      console.log(data);
       let dados = data['Time Series (Daily)'];
       let dateArray: string[] = Object.keys(dados).reverse();
       let priceArray: number[] = Array(dados);

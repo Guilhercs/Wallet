@@ -2,22 +2,31 @@
   <div class="search">
     <label>Buscar: </label>
     <mat-input-container>
-      <input id="ticker" matInput type="text" placeholder="TAEE4" [(ngModel)]="symbolName" />
+      <input
+        id="ticker"
+        matInput
+        type="text"
+        placeholder="ITUB3"
+        [(ngModel)]="symbolName"
+      />
       <button mat-button type="submit" (click)="updateData()">Inserir</button>
     </mat-input-container>
   </div>
 </div>
 <div class="exchange">
   <mat-input-container class="conversor">
-    <p class="result" *ngIf="resultDolar">Dólar: {{ resultDolar | currency: 'BRL' }}</p>
-    <p class="result" *ngIf="resultBtc">Bitcoin: {{ resultBtc | currency: 'BRL'}}</p>
+    <p class="result" *ngIf="resultDolar">
+      Dólar: {{ resultDolar | currency: "BRL" }}
+    </p>
+    <p class="result" *ngIf="resultBtc">
+      Bitcoin: {{ resultBtc | currency: "BRL" }}
+    </p>
   </mat-input-container>
 </div>
 <div class="cards">
   <div>
     <h2 class="title">Histórico de preços</h2>
-    <h3 class="symbol" *ngIf="symbolName">{{ symbolName }}</h3>
-    <p *ngIf="name">{{ name }}</p>
+    <h3 class="symbol" *ngFor="let item of data">{{ item.name }}</h3>
   </div>
   <div class="button">
     <button mat-raised-button (click)="getPrices('')">7D</button>
@@ -29,12 +38,20 @@
   </mat-card>
 </div>
 <div class="cards">
-  <mat-card *ngFor="let data of data" >
-    <p>Indústria: {{data.b3_sector}}</p>
-    <p>Segmento: {{data.b3_segment}}</p>
-    <p>Desde: {{data.founding_date | date}}</p>
-    <p>Atividade princical: {{data.main_activity}}</p>
-    <p>Nome da marca: {{data.trade_name}}</p>
-    <p>Site: {{data.website}}</p>
+  <mat-card *ngFor="let data of data">
+    <p><span>Indústria:</span> {{ data.b3_sector }}</p>
+    <p><span>Segmento:</span> {{ data.b3_segment }}</p>
+    <p><span>Desde:</span> {{ data.founding_date | date }}</p>
+    <p><span>Atividade princical:</span> {{ data.main_activity }}</p>
+    <p><span>Nome da marca:</span> {{ data.trade_name }}</p>
+    <p><span>Site:</span> {{ data.website }}</p>
+  </mat-card>
+</div>
+<div class="cards">
+  <mat-card *ngFor="let data of marketRatios">
+    <p><span>Lucro por ação (LPA): </span>{{data.earnings_per_share}}</p>
+    <p><span>Valor patrimonial por ação (VPA): </span>{{data.equity_per_share}}</p>
+    <p><span>Preço por lucro por ação (P/L): </span>{{data.price_earnings}}</p>
+    <p><span>Preço por valor patrimonial (P/VP): </span>{{data.price_to_book}}</p>
   </mat-card>
 </div>

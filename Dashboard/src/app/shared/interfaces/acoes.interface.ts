@@ -1,8 +1,8 @@
 export interface Acoes {
-  id?: number,
+  id: number,
   symbol: string,
-  price: number,
+  price: number | undefined,
   date: string,
-  quantidade: number,
+  quantidade: number | undefined,
   valorAtual?: number,
 }

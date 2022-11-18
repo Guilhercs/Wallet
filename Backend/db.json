@@ -1,13 +1,6 @@
 {
   "acoes": [
     {
-      "symbol": "TAEE4",
-      "price": 12.2,
-      "date": "12/12/2012",
-      "quantidade": 100,
-      "id": 0
-    },
-    {
       "symbol": "ITSA4",
       "price": 13.89,
       "date": "12/12/2018",
@@ -22,18 +15,18 @@
       "id": 2
     },
     {
-    "symbol": "KLBN4",
-    "price": 3.6,
-    "date": "09/11/2022",
-    "quantidade": 200,
-    "id": 3
+      "id": 3,
+      "symbol": "KLBN4",
+      "price": "3.60",
+      "date": "12/07/2022",
+      "quantidade": "230"
     },
     {
-      "symbol": "ITUB3",
-      "price": "25.35",
-      "date": "01/11/2011",
-      "quantidade": "100",
-      "id": 4
+      "id": 4,
+      "symbol": "TAEE4",
+      "price": "12.85",
+      "date": "01/11/2021",
+      "quantidade": "100"
     }
   ]
 }
