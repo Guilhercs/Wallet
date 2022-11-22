@@ -7,21 +7,66 @@
   input {
     padding: 9px;
     border-radius: 9px 0px 0px 9px;
+    width: 20%;
   }
 }
 
+.exchange {
+  .conversor {
+    display: flex;
+    align-items: center;
+  }
+  margin-left: 24px;
+  .converter {
+    border-radius: 10px;
+    width: 30px;
+    margin: 10px 0px 10px 0px;
+    padding: 9px;
+  }
+  button {
+    margin-left: 10px;
+    background-color: goldenrod;
+  }
+  span {
+    margin: 5px;
+  }
+  p {
+    background-color: #3f51b5;
+    margin: 5px;
+  }
+  .result {
+    background-color: #3f51b5;
+    width: 80px;
+    padding: 5px;
+    border-radius: 5px;
+    margin-left: 5px;
+    border-style: solid;
+  }
+}
+
+.button {
+  button {
+    margin: 24px 10px 10px 24px;
+    background-color: goldenrod;
+    color: white;
+  }
+}
 .cards {
   background-color: #3f51b5;
-  .title{
-    margin: 0px 0px 10px 24px;
-    padding-top: 10px;
-  }
-  .symbol, p{
-    margin: 0px 0px 10px 24px;
-  }
   margin: 24px 20px 20px 24px;
   border-radius: 10px;
   -webkit-box-shadow: 9px 7px 13px 5px rgba(0, 0, 0, 0.37);
   -moz-box-shadow: 9px 7px 13px 5px rgba(0, 0, 0, 0.37);
   box-shadow: 9px 7px 13px 5px rgba(0, 0, 0, 0.37);
+  .title {
+    margin: 0px 0px 10px 24px;
+    padding-top: 10px;
+  }
+  span {
+    font-weight: 500;
+  }
+  .symbol,
+  p {
+    margin: 0px 0px 10px 24px;
+  }
 }

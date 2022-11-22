@@ -1,0 +1,40 @@
+.cards {
+  margin: 24px 20px 20px 24px;
+  border-radius: 10px;
+  -webkit-box-shadow: 9px 7px 13px 5px rgba(0, 0, 0, 0.37);
+  -moz-box-shadow: 9px 7px 13px 5px rgba(0, 0, 0, 0.37);
+  box-shadow: 9px 7px 13px 5px rgba(0, 0, 0, 0.37);
+  h3 {
+    color: white;
+    font-weight: 400;
+    background-color: #3f51b5;
+    border-radius: 10px;
+    padding-left: 5px;
+  }
+}
+
+.table {
+  overflow: auto;
+  white-space: nowrap;
+  display: inline-block;
+  overflow-x: scroll;
+  scroll-snap-align: x mandatory;
+  width: 100%;
+  td, th {
+    padding: 5px;
+  }
+  td,
+  th {
+    text-align: center;
+  }
+}
+
+.button-form {
+  margin: 10px;
+  display: flex;
+  align-items: center;
+  .adicionar {
+    color: white;
+    background-color: goldenrod;
+  }
+}
