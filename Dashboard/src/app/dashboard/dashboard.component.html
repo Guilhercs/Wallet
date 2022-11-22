@@ -41,7 +41,7 @@
   <mat-card *ngFor="let data of data">
     <p><span>Indústria:</span> {{ data.b3_sector }}</p>
     <p><span>Segmento:</span> {{ data.b3_segment }}</p>
-    <p><span>Desde:</span> {{ data.founding_date | date }}</p>
+    <p><span>Desde:</span> {{ data.founding_date | datePipe }}</p>
     <p><span>Atividade princical:</span> {{ data.main_activity }}</p>
     <p><span>Nome da marca:</span> {{ data.trade_name }}</p>
     <p><span>Site:</span> {{ data.website }}</p>
@@ -49,9 +49,9 @@
 </div>
 <div class="cards">
   <mat-card *ngFor="let data of marketRatios">
-    <p><span>Lucro por ação (LPA): </span>{{data.earnings_per_share}}</p>
-    <p><span>Valor patrimonial por ação (VPA): </span>{{data.equity_per_share}}</p>
-    <p><span>Preço por lucro por ação (P/L): </span>{{data.price_earnings}}</p>
-    <p><span>Preço por valor patrimonial (P/VP): </span>{{data.price_to_book}}</p>
+    <p><span>Lucro por ação (LPA): </span>{{data.earnings_per_share | number : '1.0-1'}}</p>
+    <p><span>Valor patrimonial por ação (VPA): </span>{{data.equity_per_share | number : '1.0-1'}}</p>
+    <p><span>Preço por lucro por ação (P/L): </span>{{data.price_earnings | number : '1.0-1'}}</p>
+    <p><span>Preço por valor patrimonial (P/VP): </span>{{data.price_to_book | number : '1.0-1'}}</p>
   </mat-card>
 </div>

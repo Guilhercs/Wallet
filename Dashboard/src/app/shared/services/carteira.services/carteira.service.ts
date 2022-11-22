@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { Prices } from '../../interfaces/prices.interface';
+
 @Injectable({
   providedIn: 'root',
 })
@@ -16,8 +16,8 @@ export class CarteiraService {
     return this.http.get<Acoes>(`${this.DBWALLET}`);
   }
 
-  getPrices(ticker: string): Observable<Prices> {
-    return this.http.get<Prices>(`${this.BASEURL}ticker=${ticker}`)
+  getPrices(ticker: string): Observable<any> {
+    return this.http.get(`${this.BASEURL}ticker=${ticker}`)
   }
 
   createTicker(acoes: Acoes): Observable<Acoes> {

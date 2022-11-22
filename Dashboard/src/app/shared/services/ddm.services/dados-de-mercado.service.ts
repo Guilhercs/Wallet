@@ -16,6 +16,10 @@ export class DadosDeMercadoService {
     return this.http.get(`${this.BASEURL}companies`)
   }
 
+  getMacro(): Observable<any> {
+    return this.http.get(`${this.BASEURL}macro`)
+  }
+
   getMarketRatios(ticker: string): Observable<any> {
     return this.http.get(`${this.BASEURL}indicadores?ticker=${ticker}`)
   }

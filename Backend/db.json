@@ -17,16 +17,23 @@
     {
       "id": 3,
       "symbol": "KLBN4",
-      "price": "3.60",
+      "price": 3.60,
       "date": "12/07/2022",
-      "quantidade": "230"
+      "quantidade": 230
     },
     {
       "id": 4,
       "symbol": "TAEE4",
-      "price": "12.85",
+      "price": 12.85,
       "date": "01/11/2021",
-      "quantidade": "100"
+      "quantidade": 100
+    },
+    {
+      "id": 5,
+      "symbol": "ITUB3",
+      "price": 23.80,
+      "date": "01/11/2021",
+      "quantidade": 100
     }
   ]
 }

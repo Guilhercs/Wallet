@@ -12,7 +12,7 @@
 }
 
 .exchange {
-  .conversor{
+  .conversor {
     display: flex;
     align-items: center;
   }
@@ -27,7 +27,7 @@
     margin-left: 10px;
     background-color: goldenrod;
   }
-  span{
+  span {
     margin: 5px;
   }
   p {
@@ -51,24 +51,22 @@
     color: white;
   }
 }
-
 .cards {
   background-color: #3f51b5;
+  margin: 24px 20px 20px 24px;
+  border-radius: 10px;
+  -webkit-box-shadow: 9px 7px 13px 5px rgba(0, 0, 0, 0.37);
+  -moz-box-shadow: 9px 7px 13px 5px rgba(0, 0, 0, 0.37);
+  box-shadow: 9px 7px 13px 5px rgba(0, 0, 0, 0.37);
   .title {
     margin: 0px 0px 10px 24px;
     padding-top: 10px;
   }
-
-  span{
+  span {
     font-weight: 500;
   }
   .symbol,
   p {
     margin: 0px 0px 10px 24px;
   }
-  margin: 24px 20px 20px 24px;
-  border-radius: 10px;
-  -webkit-box-shadow: 9px 7px 13px 5px rgba(0, 0, 0, 0.37);
-  -moz-box-shadow: 9px 7px 13px 5px rgba(0, 0, 0, 0.37);
-  box-shadow: 9px 7px 13px 5px rgba(0, 0, 0, 0.37);
 }

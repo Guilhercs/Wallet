@@ -1,8 +1,9 @@
-
+import { concat, lastValueFrom } from 'rxjs';
 import { CarteiraService } from './../shared/services/carteira.services/carteira.service';
 import { Component, OnInit, Pipe } from '@angular/core';
 import { Chart, registerables } from 'chart.js';
 import { Router } from '@angular/router';
+import { Acoes } from '../shared/interfaces/acoes.interface';
 
 Chart.register(...registerables);
 @Component({
@@ -14,36 +15,47 @@ export class CarteiraComponent implements OnInit {
   myChart!: Chart;
   data!: any;
   ticker: string = 'WEGE3';
-  displayedColumns = ['id', 'symbol', 'price', 'quantidade', 'total', 'acoes'];
+  displayedColumns = ['id', 'symbol', 'price', 'quantidade', 'total', 'totalAtual','porcentagem', 'acoes'];
   qnt!: number;
   mult!: number;
   preco!: number;
   total!: number;
   porcentagem!: number[];
-  lastPrice!: number[];
+  lastPrice!: number;
   symbols: [] = [];
+  valorAtual!: number;
+  currentValue!: number;
 
   constructor(private carteira: CarteiraService, private router: Router) {}
 
   ngOnInit(): void {
-    this.tableInfo()
+    this.tableInfo();
     this.updateWallet();
   }
   tableInfo() {
     this.carteira.getWallet().subscribe((res) => {
+      console.log(res);
+
       this.data = res;
-     this.symbols = this.data.map((res: any) => res.symbol);
-     this.getPriceToday(this.symbols)
+      this.symbols = this.data.map((res: any) => res.symbol);
+      this.getPriceToday(this.symbols);
     });
   }
-  getPriceToday(arr: []) {
-    for(let i = 0; i < arr.length; i++) {
-      this.carteira.getPrices(arr[i]).subscribe((res) => {
-        let arr = Array(res);
-        this.lastPrice = arr.map((res: any) => res[res.length - 1].close);
-        console.log(this.lastPrice);
+  getPriceToday(arr: Acoes[]) {
+    for (let i = 0; i < arr.length; i++) {
+      let ticker: any = arr[i];
+      this.carteira.getPrices(ticker).subscribe((res: any[]) => {
+       this.lastPrice = res[res.length -1].close
+      this.data[i]['valorAtual'] = this.lastPrice
+       this.getEarnLoses(this.data)
       });
     }
+  }
+
+  getEarnLoses(data: Acoes[]) {
+    data.forEach((element: any) => {
+      this.currentValue = ( element.valorAtual / element.price  -1) * 100;
+    })
   }
 
   formRoute() {
@@ -54,6 +66,7 @@ export class CarteiraComponent implements OnInit {
     this.tableInfo();
     this.renderChartData();
     this.updateChart();
+    this.getEarnLoses
   }
 
   updateChart() {
@@ -82,7 +95,7 @@ export class CarteiraComponent implements OnInit {
     });
   }
 
-  renderPieChart(ticker: any, soma?: any) {
+  renderPieChart(ticker: any, soma: any) {
     this.myChart = new Chart('pieChart', {
       type: 'pie',
       data: {
