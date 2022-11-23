@@ -1,8 +1,8 @@
 <div>
   <mat-card class="cards">
     <h3 *ngIf="total">Total Investido: {{total | currency: 'BRL'}}</h3>
-    <h3>Lucro/prejuizo: </h3>
-    <h3>Patrimônio Total: </h3>
+    <h3 *ngIf="earnAndLose">Lucro/prejuizo: {{earnAndLose | currency: 'BRL'}}</h3>
+    <h3 *ngIf="patrimonioTotal">Patrimônio Total: {{patrimonioTotal | currency: 'BRL'}}</h3>
   </mat-card>
 </div>
 
