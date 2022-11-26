@@ -10,14 +10,18 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 export class CarteiraService {
   constructor(private http: HttpClient, private snackBar: MatSnackBar) {}
   DBWALLET = 'http://localhost:3001/acoes';
-  BASEURL =  'http://localhost:4567/precos?'
+  BASEURL =  'http://localhost:4567/'
 
   getWallet(): Observable<any> {
     return this.http.get<Acoes>(`${this.DBWALLET}`);
   }
 
+  getDividends(ticker: string): Observable<any> {
+    return this.http.get<any>(`${this.BASEURL}dividendos?ticker=${ticker}`)
+  }
+
   getPrices(ticker: string): Observable<any> {
-    return this.http.get(`${this.BASEURL}ticker=${ticker}`)
+    return this.http.get(`${this.BASEURL}precos?ticker=${ticker}`)
   }
 
   createTicker(acoes: Acoes): Observable<Acoes> {

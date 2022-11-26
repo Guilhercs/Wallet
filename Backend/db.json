@@ -2,8 +2,8 @@
   "acoes": [
     {
       "symbol": "ITSA4",
-      "price": 13.89,
-      "date": "12/12/2018",
+      "price": "8.56",
+      "date": "12/09/2022",
       "quantidade": 100,
       "id": 1
     },
@@ -17,7 +17,7 @@
     {
       "id": 3,
       "symbol": "KLBN4",
-      "price": 3.60,
+      "price": 3.6,
       "date": "12/07/2022",
       "quantidade": 230
     },
@@ -31,9 +31,16 @@
     {
       "id": 5,
       "symbol": "ITUB3",
-      "price": 23.80,
+      "price": 23.8,
       "date": "01/11/2021",
       "quantidade": 100
+    },
+    {
+      "id": 6,
+      "symbol": "PETR4",
+      "price": "18.23",
+      "date": "08/02/2020",
+      "quantidade": "200"
     }
   ]
 }
