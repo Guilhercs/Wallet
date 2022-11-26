@@ -1,5 +1,5 @@
 import { CarteiraService } from './../shared/services/carteira.services/carteira.service';
-import { Component, OnInit, Pipe } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Chart, registerables } from 'chart.js';
 import { Router } from '@angular/router';
 import { Acoes } from '../shared/interfaces/acoes.interface';
@@ -34,13 +34,28 @@ export class CarteiraComponent implements OnInit {
   currentValue!: number;
   earnAndLose!: number;
   patrimonioTotal!: number;
-
+  teste: any;
   constructor(private carteira: CarteiraService, private router: Router) {}
 
   ngOnInit(): void {
-    this.tableInfo();
     this.updateWallet();
   }
+
+  updateWallet() {
+    this.tableInfo();
+    this.renderChartData;
+    this.updateChart();
+  }
+
+  getPercent(arr: Acoes[]) {
+    for(let i = 0; i < arr.length; i++) {
+     let valor: any = arr[i].valorAtual;
+     let preco: any = arr[i].price;
+     this.currentValue = (valor / preco -1) * 100;
+     this.data[i]['percent'] = this.currentValue;
+    }
+  }
+
   tableInfo() {
     this.carteira.getWallet().subscribe((res) => {
       this.data = res;
@@ -56,32 +71,27 @@ export class CarteiraComponent implements OnInit {
         this.data[i]['valorAtual'] = this.lastPrice;
         this.getEarnLoses(this.data);
         this.renderChartData(this.data);
+        this.getDividendos(this.symbols);
+        this.getPercent(this.data)
       });
     }
   }
 
   getEarnLoses(data: Acoes[]) {
-    let arr = Array(data)
+    let arr = Array(data);
     const reducer = (valorInicial: number, ValorAdicional: number) =>
       valorInicial + ValorAdicional;
     arr.forEach((element: any) => {
       let valorInvestido = element.map((res: any) => res.price * res.quantidade);
-      let result = valorInvestido.reduce(reducer)
+      this.total = valorInvestido.reduce(reducer);
       let patrimonio = element.map((res: any) => res.valorAtual * res.quantidade);
       this.patrimonioTotal = patrimonio.reduce(reducer);
-      this.earnAndLose =  this.patrimonioTotal - result
-    })
-
+      this.earnAndLose = this.patrimonioTotal - this.total;
+    });
   }
 
   formRoute() {
     this.router.navigate(['/form']);
-  }
-
-  updateWallet() {
-    this.tableInfo();
-    this.renderChartData;
-    this.updateChart();
   }
 
   updateChart() {
@@ -91,22 +101,31 @@ export class CarteiraComponent implements OnInit {
   }
 
   renderChartData(arr: Acoes[]) {
-      let data = Array(arr);
-      data.forEach((element: any) => {
-        const reducer = (valorInicial: number, ValorAdicional: number) =>
-          valorInicial + ValorAdicional;
-        let ticker = Object.values(element).map((res: any) => res.symbol);
-        let valores = element.map((res: any) => res.valorAtual * res.quantidade);
-        this.total = valores.reduce(reducer);
-        let calc = Object.values(element).map((res: any) => {
-          let mult = res.valorAtual * res.quantidade;
-          let porcentagem = (mult * 100) / this.total;
-          return Math.round(porcentagem); //.toString().concat('%');
-        });
-        this.porcentagem = calc;
-        this.updateChart()
-        this.renderPieChart(ticker, this.porcentagem);
+    let data = Array(arr);
+    data.forEach((element: any) => {
+      const reducer = (valorInicial: number, ValorAdicional: number) =>
+        valorInicial + ValorAdicional;
+      let ticker = Object.values(element).map((res: any) => res.symbol);
+      let valores = element.map((res: any) => res.valorAtual * res.quantidade);
+      let total = valores.reduce(reducer);
+      let calc = Object.values(element).map((res: any) => {
+        let mult = res.valorAtual * res.quantidade;
+        let porcentagem = (mult * 100) / total;
+        return Math.round(porcentagem); //.toString().concat('%');
       });
+      this.porcentagem = calc;
+      this.updateChart();
+      this.renderPieChart(ticker, this.porcentagem);
+    });
+  }
+
+  getDividendos(arr: string[]) {
+    for (let i = 0; i < arr.length; i++) {
+      let ticker = arr[i];
+      this.carteira.getDividends(ticker).subscribe((res) => {
+        this.data[i]['dividends'] = res;
+      });
+    }
   }
 
   renderPieChart(ticker: any, soma: any) {

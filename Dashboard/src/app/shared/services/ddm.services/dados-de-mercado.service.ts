@@ -27,4 +27,5 @@ export class DadosDeMercadoService {
   getQuotes(ticker: string): Observable<Cotas> {
     return this.http.get<Cotas>(`${this.BASEURL}quotes?ticker=${ticker}`)
   }
+
 }
