@@ -48,6 +48,9 @@
   </mat-card>
 </div>
 <div class="cards">
+  <mat-card class="loading" *ngIf="!marketRatios; loading">
+    <mat-spinner #loading></mat-spinner>
+  </mat-card>
   <mat-card *ngFor="let data of marketRatios">
     <p><span>Lucro por ação (LPA): </span>{{data.earnings_per_share | number : '1.0-1'}}</p>
     <p><span>Valor patrimonial por ação (VPA): </span>{{data.equity_per_share | number : '1.0-1'}}</p>

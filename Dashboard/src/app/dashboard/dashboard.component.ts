@@ -28,6 +28,7 @@ export class DashboardComponent implements OnInit {
   resultBtc!: string;
   tempo!: string;
   data: any;
+  loading!: boolean
   marketRatios!: any;
   constructor(
     private alpha: AlphaVantageService,
@@ -36,7 +37,7 @@ export class DashboardComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.getMarketRatios();
+
     this.updateData();
     // this.filterInput();
     // this.getCompanyOverview();
@@ -46,6 +47,7 @@ export class DashboardComponent implements OnInit {
     this.converter();
     this.getCompanyOverview();
     this.getPrices(this.tempo);
+    this.getMarketRatios();
     // this.getFullHistory();
     this.updateChart();
   }

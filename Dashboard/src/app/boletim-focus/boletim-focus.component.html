@@ -20,13 +20,13 @@
 
       <ng-container matColumnDef="registro">
         <th mat-header-cell *matHeaderCellDef>Último valor registrado</th>
-        <td mat-cell *matCellDef="let element">{{ element.last }}</td>
+        <td mat-cell *matCellDef="let element">{{ element.last | number: "0.1":"pt-BR" | slice: 0:3 }}%</td>
       </ng-container>
 
       <ng-container matColumnDef="ultimo">
         <th mat-header-cell *matHeaderCellDef>Valor registrado no último mês</th>
         <td id="totalPago" mat-cell *matCellDef="let element">
-          {{ element.last_month }}
+          {{ element.last_month | number: "0.1":"pt-BR" | slice: 0:3 }}%
         </td>
       </ng-container>
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
