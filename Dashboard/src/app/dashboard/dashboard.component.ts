@@ -1,10 +1,8 @@
 import { DadosDeMercadoService } from './../shared/services/ddm.services/dados-de-mercado.service';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { DatePipe } from './../shared/pipe/date.pipe';
 import { AlphaVantageService } from '../shared/services/alpha.services/alpha-vantage.service';
 import { Component, OnInit } from '@angular/core';
 import { Chart, registerables } from 'node_modules/chart.js';
-import { concat, shareReplay } from 'rxjs';
 
 Chart.register(...registerables);
 @Component({
@@ -30,6 +28,7 @@ export class DashboardComponent implements OnInit {
   data: any;
   loading!: boolean
   marketRatios!: any;
+  color!: string;
   constructor(
     private alpha: AlphaVantageService,
     private datetransform: DatePipe,
@@ -37,9 +36,8 @@ export class DashboardComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-
+    this.filterInput()
     this.updateData();
-    // this.filterInput();
     // this.getCompanyOverview();
   }
 
@@ -47,13 +45,14 @@ export class DashboardComponent implements OnInit {
     this.converter();
     this.getCompanyOverview();
     this.getPrices(this.tempo);
-    this.getMarketRatios();
+    this.getMarketRatios()
     // this.getFullHistory();
     this.updateChart();
   }
 
   getMarketRatios(){
-    this.dados.getMarketRatios(this.symbolName).subscribe(res => {
+    let symbol = this.symbolName.toUpperCase()
+    this.dados.getMarketRatios(symbol).subscribe(res => {
       let arr = Array(res);
       this.marketRatios = arr.map((res: any) => res[res.length - 1]);
     })
@@ -63,7 +62,6 @@ export class DashboardComponent implements OnInit {
     let input, filter
     input = document.getElementById('ticker') as any;
     filter = input.value?.toUpperCase()
-    this.symbolName = filter
   }
 
   converter() {
@@ -71,10 +69,11 @@ export class DashboardComponent implements OnInit {
     dolar.subscribe((res: any) => {
       this.resultDolar = res['Realtime Currency Exchange Rate']['8. Bid Price'];
     });
-    const bitcoin = this.alpha.getExchange(this.btc, this.brl);
-    bitcoin.subscribe((res: any) => {
-      this.resultBtc = res['Realtime Currency Exchange Rate']['8. Bid Price'];
-    });
+    // const bitcoin = this.alpha.getExchange(this.btc, this.brl);
+    // bitcoin.subscribe((res: any) => {
+    //   this.resultBtc = res['Realtime Currency Exchange Rate']['8. Bid Price'];
+    //   console.log(this.resultBtc);
+    // });
   }
 
 
@@ -116,6 +115,7 @@ export class DashboardComponent implements OnInit {
   getPrices(tempo: string) {
     const response = this.alpha.getSeries(this.symbolName);
     response.subscribe((data) => {
+      console.log(data);
       let dados = data['Time Series (Daily)'];
       let dateArray: string[] = Object.keys(dados).reverse();
       let priceArray: number[] = Array(dados);
@@ -128,6 +128,7 @@ export class DashboardComponent implements OnInit {
             this.stockPrices = price.slice(10);
             this.dataSet = dateArray.slice(10);
             this.updateChart();
+            alert('Para melhor visualização do gráfico, use o modo paisagem')
             break;
           case '30':
             this.stockPrices = price.slice(70);
@@ -149,30 +150,22 @@ export class DashboardComponent implements OnInit {
   }
 
   renderChart(dataSet: any, stockPrices: any, symbol?: string) {
+    let color = ''
+    const ultimo = stockPrices[stockPrices.length -1];
+    const primeiro = stockPrices[0];
+    const value = primeiro - ultimo;
+    color = value > 0 ? 'rgba(255, 99, 132, 0.5)' : 'rgba(46, 138, 138, 0.5)';
+    let label = symbol?.toUpperCase();
     this.myChart = new Chart('lineChart', {
       type: 'line',
       data: {
         labels: dataSet,
         datasets: [
           {
-            label: `Valor da ${symbol}`,
+            label: `Valor da ${label}`,
             data: stockPrices,
-            backgroundColor: [
-              // 'rgba(255, 99, 132, 0.2)',
-              'rgba(54, 162, 235, 0.2)',
-              // 'rgba(255, 206, 86, 0.2)',
-              // 'rgba(75, 192, 192, 0.2)',
-              // 'rgba(153, 102, 255, 0.2)',
-              // 'rgba(255, 159, 64, 0.2)',
-            ],
-            borderColor: [
-              // 'rgba(255, 99, 132, 1)',
-              'rgba(54, 162, 235, 1)',
-              // 'rgba(255, 206, 86, 1)',
-              // 'rgba(75, 192, 192, 1)',
-              // 'rgba(153, 102, 255, 1)',
-              // 'rgba(255, 159, 64, 1)',
-            ],
+            backgroundColor: color,
+            borderColor: color,
             borderWidth: 1,
           },
         ],

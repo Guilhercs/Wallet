@@ -44,7 +44,6 @@ export class CarteiraComponent implements OnInit {
   updateWallet() {
     this.tableInfo();
     this.renderChartData;
-    this.updateChart();
   }
 
   getPercent(arr: Acoes[]) {
@@ -60,10 +59,10 @@ export class CarteiraComponent implements OnInit {
     this.carteira.getWallet().subscribe((res) => {
       this.data = res;
       this.symbols = this.data.map((res: any) => res.symbol);
-      this.getPriceToday(this.symbols);
+      this.setWallet(this.symbols);
     });
   }
-  getPriceToday(arr: Acoes[]) {
+  setWallet(arr: Acoes[]) {
     for (let i = 0; i < arr.length; i++) {
       let ticker: any = arr[i];
       this.carteira.getPrices(ticker).subscribe((res: any[]) => {
@@ -71,7 +70,7 @@ export class CarteiraComponent implements OnInit {
         this.data[i]['valorAtual'] = this.lastPrice;
         this.getEarnLoses(this.data);
         this.renderChartData(this.data);
-        this.getDividendos(this.symbols);
+        this.getDividends(this.symbols);
         this.getPercent(this.data)
       });
     }
@@ -119,7 +118,7 @@ export class CarteiraComponent implements OnInit {
     });
   }
 
-  getDividendos(arr: string[]) {
+  getDividends(arr: string[]) {
     for (let i = 0; i < arr.length; i++) {
       let ticker = arr[i];
       this.carteira.getDividends(ticker).subscribe((res) => {
@@ -144,6 +143,13 @@ export class CarteiraComponent implements OnInit {
               'rgba(153, 102, 255, 0.2)',
               'rgba(255, 159, 64, 0.2)',
               'rgba(172, 92, 138, 0.2)',
+              'rgba(200, 88, 132, 0.2)',
+              'rgba(54, 162, 235, 0.2)',
+              'rgba(222, 207, 101, 0.2)',
+              'rgba(95, 182, 150, 0.2)',
+              'rgba(153, 125, 222, 0.2)',
+              'rgba(210, 159, 164, 0.2)',
+              'rgba(180, 95, 138, 0.2)',
             ],
             borderColor: [
               'rgba(255, 99, 132, 1)',
@@ -153,6 +159,13 @@ export class CarteiraComponent implements OnInit {
               'rgba(153, 102, 255, 1)',
               'rgba(255, 159, 64, 1)',
               'rgba(172, 92, 138, 1)',
+              'rgba(200, 88, 132, 0.2)',
+              'rgba(54, 162, 235, 0.2)',
+              'rgba(222, 207, 101, 0.2)',
+              'rgba(95, 182, 150, 0.2)',
+              'rgba(153, 125, 222, 0.2)',
+              'rgba(210, 159, 164, 0.2)',
+              'rgba(180, 95, 138, 0.2)',
             ],
             borderWidth: 1,
           },

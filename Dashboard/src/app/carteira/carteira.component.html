@@ -70,6 +70,9 @@
     <ng-container matColumnDef="acoes">
       <th mat-header-cell *matHeaderCellDef>Ações</th>
       <td mat-cell *matCellDef="let element">
+        <a routerLink="/aportar/{{ element.id }}" class="aporte">
+          <i class="material-icons aporte"> monetization_on </i>
+        </a>
         <a routerLink="/alterar/{{ element.id }}" class="edit">
           <i class="material-icons edit"> edit </i>
         </a>

@@ -18,7 +18,8 @@ export class FormComponent implements OnInit {
   };
   constructor(private carteira: CarteiraService, private router: Router) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+  }
 
   createTicker() {
       this.carteira.createTicker(this.acoes).subscribe(() => {

@@ -1,3 +1,4 @@
+import { AporteComponent } from './aporte/aporte.component';
 import { BoletimFocusComponent } from './boletim-focus/boletim-focus.component';
 import { DeletarComponent } from './deletar/deletar.component';
 import { AlterarComponent } from './alterar/alterar.component';
@@ -14,6 +15,7 @@ const routes: Routes = [
   {path: "boletim", component: BoletimFocusComponent},
   {path: "alterar/:id", component: AlterarComponent},
   {path: "deletar/:id", component: DeletarComponent},
+  {path: "aportar/:id", component: AporteComponent},
 
 ];
 

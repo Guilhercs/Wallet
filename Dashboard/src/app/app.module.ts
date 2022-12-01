@@ -29,6 +29,7 @@ import { DeletarComponent } from './deletar/deletar.component';
 import { BoletimFocusComponent } from './boletim-focus/boletim-focus.component';
 import { registerLocaleData} from '@angular/common';
 import localePt from '@angular/common/locales/pt';
+import { AporteComponent } from './aporte/aporte.component';
 registerLocaleData(localePt)
 @NgModule({
 
@@ -42,6 +43,7 @@ registerLocaleData(localePt)
     AlterarComponent,
     DeletarComponent,
     BoletimFocusComponent,
+    AporteComponent,
   ],
   imports: [
     BrowserModule,
