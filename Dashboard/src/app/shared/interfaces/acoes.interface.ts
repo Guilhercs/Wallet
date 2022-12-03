@@ -6,17 +6,5 @@ export interface Acoes {
   quantidade: number | undefined,
   valorAtual?: number,
   percent?: number | string;
-  dividends?: [
-    {
-      amount: number;
-      approval_date: string | null;
-      cvm_code: number;
-      ex_date: string;
-      notes: string | null;
-      payable_date: string;
-      record_date: string;
-      ticker: string;
-      type: string;
-    }
-  ];
+  dividends?: number;
 }

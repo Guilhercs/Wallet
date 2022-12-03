@@ -1,46 +1,46 @@
 {
   "acoes": [
     {
-      "symbol": "ITSA4",
-      "price": "8.43",
-      "date": "2022-11-09",
-      "quantidade": 100,
-      "id": 1
-    },
-    {
-      "symbol": "WEGE3",
-      "price": 25.8,
-      "date": "12/12/2019",
-      "quantidade": 100,
-      "id": 2
-    },
-    {
-      "id": 3,
+      "id": 1,
       "symbol": "KLBN4",
-      "price": 3.6,
-      "date": "12/07/2022",
-      "quantidade": 230
+      "price": 3.16,
+      "date": "2016-02-24",
+      "quantidade": 200
     },
     {
-      "id": 4,
-      "symbol": "TAEE4",
-      "price": 12.85,
-      "date": "01/11/2021",
+      "id": 2,
+      "symbol": "ITUB3",
+      "price": 23.25,
+      "date": "2022-10-05",
       "quantidade": 100
     },
     {
+      "id": 3,
+      "symbol": "PETR4",
+      "price": 18.25,
+      "date": "2021-02-17",
+      "quantidade": 150
+    },
+    {
+      "id": 4,
+      "symbol": "ITSA4",
+      "price": 8.95,
+      "date": "2022-11-29",
+      "quantidade": 200
+    },
+    {
       "id": 5,
-      "symbol": "ITUB3",
-      "price": 23.8,
-      "date": "01/11/2021",
+      "symbol": "WEGE3",
+      "price": 25.36,
+      "date": "2022-07-20",
       "quantidade": 100
     },
     {
       "id": 6,
-      "symbol": "PETR4",
-      "price": "18.23",
-      "date": "08/02/2020",
-      "quantidade": "200"
+      "symbol": "VALE3",
+      "price": 42.9,
+      "date": "2022-03-15",
+      "quantidade": 100
     }
   ]
 }

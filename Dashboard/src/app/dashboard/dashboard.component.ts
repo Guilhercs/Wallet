@@ -69,11 +69,11 @@ export class DashboardComponent implements OnInit {
     dolar.subscribe((res: any) => {
       this.resultDolar = res['Realtime Currency Exchange Rate']['8. Bid Price'];
     });
-    // const bitcoin = this.alpha.getExchange(this.btc, this.brl);
-    // bitcoin.subscribe((res: any) => {
-    //   this.resultBtc = res['Realtime Currency Exchange Rate']['8. Bid Price'];
-    //   console.log(this.resultBtc);
-    // });
+    const bitcoin = this.alpha.getExchange(this.btc, this.brl);
+    bitcoin.subscribe((res: any) => {
+      this.resultBtc = res['Realtime Currency Exchange Rate']['8. Bid Price'];
+      console.log(this.resultBtc);
+    });
   }
 
 

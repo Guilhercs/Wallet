@@ -22,6 +22,7 @@ export class CarteiraComponent implements OnInit {
     'total',
     'totalAtual',
     'porcentagem',
+    'dividendos',
     'acoes',
   ];
   qnt!: number;
@@ -31,7 +32,7 @@ export class CarteiraComponent implements OnInit {
   porcentagem!: number[];
   lastPrice!: number;
   symbols: [] = [];
-  currentValue!: number;
+  percent!: number;
   earnAndLose!: number;
   patrimonioTotal!: number;
   teste: any;
@@ -46,15 +47,6 @@ export class CarteiraComponent implements OnInit {
     this.renderChartData;
   }
 
-  getPercent(arr: Acoes[]) {
-    for(let i = 0; i < arr.length; i++) {
-     let valor: any = arr[i].valorAtual;
-     let preco: any = arr[i].price;
-     this.currentValue = (valor / preco -1) * 100;
-     this.data[i]['percent'] = this.currentValue;
-    }
-  }
-
   tableInfo() {
     this.carteira.getWallet().subscribe((res) => {
       this.data = res;
@@ -62,17 +54,28 @@ export class CarteiraComponent implements OnInit {
       this.setWallet(this.symbols);
     });
   }
+
   setWallet(arr: Acoes[]) {
     for (let i = 0; i < arr.length; i++) {
       let ticker: any = arr[i];
       this.carteira.getPrices(ticker).subscribe((res: any[]) => {
         this.lastPrice = res[res.length - 1].close;
         this.data[i]['valorAtual'] = this.lastPrice;
+        let dataCompra = this.data.map((res: any) => res.date);
+        this.getPercent(this.data);
         this.getEarnLoses(this.data);
         this.renderChartData(this.data);
-        this.getDividends(this.symbols);
-        this.getPercent(this.data)
+        this.getDividends(this.symbols, dataCompra);
       });
+    }
+  }
+
+  getPercent(arr: Acoes[]) {
+    for (let i = 0; i < arr.length; i++) {
+      let valor: any = arr[i].valorAtual;
+      let preco: any = arr[i].price;
+      this.percent = (valor / preco - 1) * 100;
+      this.data[i]['percent'] = this.percent;
     }
   }
 
@@ -80,23 +83,12 @@ export class CarteiraComponent implements OnInit {
     let arr = Array(data);
     const reducer = (valorInicial: number, ValorAdicional: number) =>
       valorInicial + ValorAdicional;
-    arr.forEach((element: any) => {
-      let valorInvestido = element.map((res: any) => res.price * res.quantidade);
+    arr.forEach((element: any) => {let valorInvestido = element.map((res: any) => res.price * res.quantidade);
       this.total = valorInvestido.reduce(reducer);
       let patrimonio = element.map((res: any) => res.valorAtual * res.quantidade);
       this.patrimonioTotal = patrimonio.reduce(reducer);
       this.earnAndLose = this.patrimonioTotal - this.total;
     });
-  }
-
-  formRoute() {
-    this.router.navigate(['/form']);
-  }
-
-  updateChart() {
-    if (this.myChart != undefined) {
-      this.myChart.destroy();
-    }
   }
 
   renderChartData(arr: Acoes[]) {
@@ -118,12 +110,32 @@ export class CarteiraComponent implements OnInit {
     });
   }
 
-  getDividends(arr: string[]) {
+  getDividends(arr: string[], datas: string) {
+    const reducer = (valorInicial: number, ValorAdicional: number) =>
+    valorInicial + ValorAdicional;
     for (let i = 0; i < arr.length; i++) {
-      let ticker = arr[i];
-      this.carteira.getDividends(ticker).subscribe((res) => {
-        this.data[i]['dividends'] = res;
+      let tickers = arr[i];
+      let dataCompra = datas[i];
+      this.carteira.getDividends(tickers).subscribe((res) => {
+        let walletTickers = res.filter((symbol: { ticker: any }) => symbol.ticker == tickers);
+        let dividendos = walletTickers.filter((date: { payable_date: any }) => date.payable_date >= dataCompra);
+        let totalDividendos = dividendos.map((res:any) => res.amount)
+        let soma = totalDividendos.reduce(reducer)
+        this.data[i]['dividends'] = soma
+        console.log(this.data);
+
       });
+    }
+  }
+
+
+  formRoute() {
+    this.router.navigate(['/form']);
+  }
+
+  updateChart() {
+    if (this.myChart != undefined) {
+      this.myChart.destroy();
     }
   }
 
