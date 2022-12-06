@@ -1,5 +1,5 @@
 <mat-card class="cards">
-  <mat-card-title>Aportar</mat-card-title>
+  <mat-card-title>Adicionar Compra</mat-card-title>
   <form class="example-form">
     <mat-form-field class="example-full-width" appearance="fill">
       <mat-label>Ticker</mat-label>
@@ -19,6 +19,7 @@
         required
         [(ngModel)]="preco"
         name="preco"
+        type="number"
       />
     </mat-form-field>
     <mat-form-field class="example-full-width" appearance="fill">
@@ -29,6 +30,7 @@
         required
         [(ngModel)]="qnt"
         name="qnt"
+        type="number"
       />
     </mat-form-field>
     <mat-form-field class="example-full-width" appearance="fill">
@@ -44,7 +46,7 @@
     </mat-form-field>
   </form>
   <div class="buttons">
-    <button mat-raised-button class="alterar" (click)="Aportar()">Aportar</button>
+    <button mat-raised-button class="alterar" (click)="aportar()">Aportar</button>
     <button mat-raised-button class="cancelar" (click)="cancelar()">Cancelar</button>
   </div>
 </mat-card>

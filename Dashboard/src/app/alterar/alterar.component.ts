@@ -16,6 +16,9 @@ export class AlterarComponent implements OnInit {
     date: "",
     quantidade: undefined,
   }
+
+
+
   constructor(private router: Router,
     private route: ActivatedRoute,
     private carteira: CarteiraService) { }
@@ -24,13 +27,11 @@ export class AlterarComponent implements OnInit {
     const id = this.route.snapshot.paramMap.get('id');
     this.carteira.getId(id!).subscribe(acoes => {
       this.acoes = acoes
-      console.log(this.acoes);
-
     })
   }
 
   alterar() {
-    this.carteira.atualizar(this.acoes).subscribe((acoes) =>{
+    this.carteira.atualizar(this.acoes).subscribe(() =>{
       this.carteira.showMessage('Produto alterado com sucesso!');
       this.router.navigate(['/carteira']);
     });

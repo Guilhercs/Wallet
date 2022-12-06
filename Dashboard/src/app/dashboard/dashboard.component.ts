@@ -38,15 +38,13 @@ export class DashboardComponent implements OnInit {
   ngOnInit(): void {
     this.filterInput()
     this.updateData();
-    // this.getCompanyOverview();
   }
 
   updateData() {
     this.converter();
     this.getCompanyOverview();
     this.getPrices(this.tempo);
-    this.getMarketRatios()
-    // this.getFullHistory();
+    this.getMarketRatios();
     this.updateChart();
   }
 
@@ -54,7 +52,7 @@ export class DashboardComponent implements OnInit {
     let symbol = this.symbolName.toUpperCase()
     this.dados.getMarketRatios(symbol).subscribe(res => {
       let arr = Array(res);
-      this.marketRatios = arr.map((res: any) => res[res.length - 1]);
+      this.marketRatios = arr.map((res: Object[]) => res[res.length - 1]);
     })
   }
 
@@ -86,31 +84,10 @@ export class DashboardComponent implements OnInit {
   getCompanyOverview() {
     let overview = this.dados.getOverview().pipe();
     overview.subscribe((data) => {
-      let dados = data.find((element: any) =>
-        element['b3_issuer_code'] === this.symbolName.substring(0, 4).toUpperCase()
-      );
+      let dados = data.find((element: any) => element['b3_issuer_code'] === this.symbolName.substring(0, 4).toUpperCase());
       this.data = Array(dados);
     });
   }
-
-  // getFullHistory() {
-  //   const response = this.alpha
-  //     .getSeriesFull(this.symbolName)
-  //     .pipe(shareReplay());
-  //   response.subscribe((data: any) => {
-  //     let dados = data['Time Series (Daily)'];
-  //     let dateArray: string[] = Object.keys(dados).reverse();
-  //     this.dataSet = dateArray;
-  //     let priceArray: number[] = Array(dados);
-  //     priceArray.forEach((element: any) => {
-  //       let price: any = Object.values(element)
-  //         .map((res: any) => res['4. close'])
-  //         .reverse();
-  //       this.stockPrices = price;
-  //     });
-  //     this.renderChart(this.dataSet, this.stockPrices, this.symbolName);
-  //   });
-  // }
 
   getPrices(tempo: string) {
     const response = this.alpha.getSeries(this.symbolName);
@@ -120,7 +97,7 @@ export class DashboardComponent implements OnInit {
       let dateArray: string[] = Object.keys(dados).reverse();
       let priceArray: number[] = Array(dados);
       priceArray.forEach((element: any) => {
-        let price: any = Object.values(element)
+        let price = Object.values(element)
           .map((res: any) => res['4. close'])
           .reverse();
         switch (tempo) {
@@ -149,13 +126,13 @@ export class DashboardComponent implements OnInit {
     });
   }
 
-  renderChart(dataSet: any, stockPrices: any, symbol?: string) {
+  renderChart(dataSet: any, stockPrices: any, symbol: string) {
     let color = ''
     const ultimo = stockPrices[stockPrices.length -1];
     const primeiro = stockPrices[0];
     const value = primeiro - ultimo;
     color = value > 0 ? 'rgba(255, 99, 132, 0.5)' : 'rgba(46, 138, 138, 0.5)';
-    let label = symbol?.toUpperCase();
+    let label = symbol.toUpperCase();
     this.myChart = new Chart('lineChart', {
       type: 'line',
       data: {

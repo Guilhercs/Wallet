@@ -13,7 +13,6 @@ Chart.register(...registerables);
 export class CarteiraComponent implements OnInit {
   myChart!: Chart;
   data!: any;
-  ticker: string = 'WEGE3';
   displayedColumns = [
     'id',
     'symbol',
@@ -52,6 +51,7 @@ export class CarteiraComponent implements OnInit {
       this.data = res;
       this.symbols = this.data.map((res: any) => res.symbol);
       this.setWallet(this.symbols);
+      // this.checkWallet(this.data)
     });
   }
 
@@ -70,6 +70,15 @@ export class CarteiraComponent implements OnInit {
     }
   }
 
+  // checkWallet(arr: any) {
+  //  let newArray = arr.reduce((newArray: any, acoes: any) => {
+  //   newArray[acoes.symbol] = newArray[acoes.symbol] || []
+  //   newArray[acoes.symbol].push(acoes)
+  //   return newArray
+  //  }, []);
+  //  console.log(newArray);
+  // }
+
   getPercent(arr: Acoes[]) {
     for (let i = 0; i < arr.length; i++) {
       let valor: any = arr[i].valorAtual;
@@ -83,7 +92,8 @@ export class CarteiraComponent implements OnInit {
     let arr = Array(data);
     const reducer = (valorInicial: number, ValorAdicional: number) =>
       valorInicial + ValorAdicional;
-    arr.forEach((element: any) => {let valorInvestido = element.map((res: any) => res.price * res.quantidade);
+    arr.forEach((element: any) => {
+      let valorInvestido = element.map((res: any) => res.price * res.quantidade);
       this.total = valorInvestido.reduce(reducer);
       let patrimonio = element.map((res: any) => res.valorAtual * res.quantidade);
       this.patrimonioTotal = patrimonio.reduce(reducer);
@@ -122,8 +132,6 @@ export class CarteiraComponent implements OnInit {
         let totalDividendos = dividendos.map((res:any) => res.amount)
         let soma = totalDividendos.reduce(reducer)
         this.data[i]['dividends'] = soma
-        console.log(this.data);
-
       });
     }
   }
@@ -171,13 +179,13 @@ export class CarteiraComponent implements OnInit {
               'rgba(153, 102, 255, 1)',
               'rgba(255, 159, 64, 1)',
               'rgba(172, 92, 138, 1)',
-              'rgba(200, 88, 132, 0.2)',
-              'rgba(54, 162, 235, 0.2)',
-              'rgba(222, 207, 101, 0.2)',
-              'rgba(95, 182, 150, 0.2)',
-              'rgba(153, 125, 222, 0.2)',
-              'rgba(210, 159, 164, 0.2)',
-              'rgba(180, 95, 138, 0.2)',
+              'rgba(200, 88, 132, 1)',
+              'rgba(54, 162, 235, 1)',
+              'rgba(222, 207, 101, 1)',
+              'rgba(95, 182, 150, 1)',
+              'rgba(153, 125, 222, 1)',
+              'rgba(210, 159, 164, 1)',
+              'rgba(180, 95, 138, 1)',
             ],
             borderWidth: 1,
           },

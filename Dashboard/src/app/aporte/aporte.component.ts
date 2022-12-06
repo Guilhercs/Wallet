@@ -32,7 +32,8 @@ export class AporteComponent implements OnInit {
     })
   }
 
-  Aportar() {
+
+  aportar() {
     this.carteira.atualizar(this.acoes).subscribe((res: any) =>{
       console.log(res);
       this.carteira.showMessage('Produto alterado com sucesso!');
