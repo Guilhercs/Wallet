@@ -3,7 +3,7 @@
     {
       "id": 1,
       "symbol": "KLBN4",
-      "price": 3.3,
+      "price": 3.2,
       "date": "2016-02-24",
       "quantidade": 200
     },
@@ -33,13 +33,6 @@
       "symbol": "WEGE3",
       "price": 25.36,
       "date": "2022-07-20",
-      "quantidade": 100
-    },
-    {
-      "id": 6,
-      "symbol": "VALE3",
-      "price": 42.9,
-      "date": "2022-03-15",
       "quantidade": 100
     }
   ]

@@ -43,11 +43,6 @@ export class CarteiraService {
     return this.http.put<Acoes>(url, acoes);
   }
 
-  aporte(acoes: any): Observable<Acoes> {
-    const url = `${this.DBWALLET}/${acoes.id}`;
-    return this.http.put<Acoes>(url, acoes);
-  }
-
   showMessage(msg: string): void {
     this.snackBar.open(msg, 'X', {
       duration: 3000,

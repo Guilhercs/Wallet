@@ -51,7 +51,7 @@ export class CarteiraComponent implements OnInit {
       this.data = res;
       this.symbols = this.data.map((res: any) => res.symbol);
       this.setWallet(this.symbols);
-      // this.checkWallet(this.data)
+      this.checkWallet(this.data)
     });
   }
 
@@ -70,14 +70,14 @@ export class CarteiraComponent implements OnInit {
     }
   }
 
-  // checkWallet(arr: any) {
-  //  let newArray = arr.reduce((newArray: any, acoes: any) => {
-  //   newArray[acoes.symbol] = newArray[acoes.symbol] || []
-  //   newArray[acoes.symbol].push(acoes)
-  //   return newArray
-  //  }, []);
-  //  console.log(newArray);
-  // }
+  checkWallet(arr: any) {
+   let newArray = arr.reduce((newArray: any, acoes: any) => {
+    newArray[acoes.symbol] = newArray[acoes.symbol] || []
+    newArray[acoes.symbol].push(acoes)
+    return newArray
+   }, []);
+   console.log(newArray);
+  }
 
   getPercent(arr: Acoes[]) {
     for (let i = 0; i < arr.length; i++) {
