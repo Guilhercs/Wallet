@@ -4,10 +4,6 @@ import { Acoes } from './../shared/interfaces/acoes.interface';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
-interface datas {
-  date: string
-}
-
 @Component({
   selector: 'app-aporte',
   templateUrl: './aporte.component.html',
@@ -19,9 +15,7 @@ export class AporteComponent implements OnInit {
     id: 0,
     symbol: "",
     price: undefined,
-    date: [{
-      datas: "",
-    }],
+    date: [''],
     quantidade: undefined,
   }
 
@@ -44,12 +38,10 @@ export class AporteComponent implements OnInit {
     console.log(this.acoes);
     const price: any = this.acoes.price
     const quantidade: any = this.acoes.quantidade;
-    // const data: any = this.acoes.date.concat(this.data);
     const precoMedio = (price * quantidade + this.preco * this.qnt) / (quantidade + this.qnt);
     this.acoes.price = precoMedio
     this.acoes.quantidade = quantidade + this.qnt;
-    console.log(precoMedio);
-    // this.acoes.date = data
+    this.acoes.date.push(this.data);
     this.carteira.atualizar(this.acoes).subscribe((res: any) =>{
       this.carteira.showMessage('Produto alterado com sucesso!');
       this.router.navigate(['/carteira']);

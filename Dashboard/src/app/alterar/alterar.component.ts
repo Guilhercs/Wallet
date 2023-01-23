@@ -13,7 +13,7 @@ export class AlterarComponent implements OnInit {
     id: 0,
     symbol: "",
     price: undefined,
-    date: "",
+    date: [""],
     quantidade: undefined,
   }
 

@@ -13,7 +13,7 @@ export class FormComponent implements OnInit {
     id: 0,
     symbol: '',
     price: 0,
-    date: '',
+    date: [''],
     quantidade: 0,
   };
   constructor(private carteira: CarteiraService, private router: Router) {}

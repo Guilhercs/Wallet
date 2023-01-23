@@ -13,7 +13,7 @@ export class DeletarComponent implements OnInit {
     id: 0,
     symbol: "",
     price: undefined,
-    date: "",
+    date: [""],
     quantidade: undefined,
   }
 
